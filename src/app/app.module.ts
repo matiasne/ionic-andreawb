@@ -37,6 +37,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { SeleccionarImagenComponent } from './Components/seleccionar-imagen/seleccionar-imagen.component';
 import { ComponentsModule } from './Components/components.module';
 import { ItemDirective } from './Components/list-base/item.directive';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAYAbLJnwJPwltC6tC1NaPjryYuIKTB1zM",
@@ -65,6 +67,7 @@ const firebaseConfig = {
     ReactiveFormsModule,
     BrowserModule,
     NgxQRCodeModule,
+    NgxDatatableModule,   
     HttpClientModule,
     ImageCropperModule,
     IonicModule.forRoot(),

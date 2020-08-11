@@ -8,12 +8,15 @@ import { InputUbicacionComponent } from '../Components/input-ubicacion/input-ubi
 import { HeaderComponent } from './header/header.component';
 import { ItemDirective } from './list-base/item.directive';
 import { ListBaseComponent } from './list-base/list-base.component';
+import { TableComponent } from './table/table.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
 imports: [
     CommonModule,    
     FormsModule,
     ReactiveFormsModule,
+    NgxDatatableModule,
     IonicModule,
     ImageCropperModule,
     ],
@@ -21,12 +24,14 @@ imports: [
     SeleccionarImagenComponent,
     HeaderComponent,
     ListBaseComponent,
+    TableComponent,
     ItemDirective
   ],
   exports: [
     SeleccionarImagenComponent,
     HeaderComponent,
     ListBaseComponent,
+    TableComponent,
     ItemDirective
   ]
 })
