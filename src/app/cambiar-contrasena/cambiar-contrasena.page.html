@@ -1,0 +1,26 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <app-header [titulo]="'Cambiar Contraseña'" [icono]="'back'"></app-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <app-card-usuario [usuario]="usuario"></app-card-usuario>
+  <div class="ion-padding">
+    <form name="formCabmiarContrasena" #cambiarContrasena="ngForm"> 
+           <!-- [ngModelOptions]="{standalone: true}"-->
+      <h4>Contraseña Actual</h4>
+      <ion-input type="password" [(ngModel)]="contrasena" 
+          name="contrasena"></ion-input>
+      <h4>Nueva Contraseña</h4>
+      <ion-input type="password" [(ngModel)]="contrasenaNueva" 
+          name="contrasenaNueva"></ion-input>
+      <h4>Repetir Contraseña</h4>
+      <ion-input type="password" [(ngModel)]="contrasenaRepetida" 
+          name="contrasenaRepetida"></ion-input>
+      <p>La contraseña debe contener 8 caracteres y 1 número</p>
+      <ion-button type="button" expand="block" (click)="cambiar()">CAMBIAR</ion-button>
+      <!--type="submit" [disabled]="form.invalid" expand="block" -->
+    </form>
+  </div>
+</ion-content>
