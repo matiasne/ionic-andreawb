@@ -34,7 +34,15 @@ const routes: Routes = [
   {
     path: 'form-registro',
     loadChildren: () => import('./form-registro/form-registro.module').then( m => m.FormRegistroPageModule)
-  },  
+  },   {
+    path: 'form-registro-cliente',
+    loadChildren: () => import('./form-registro-cliente/form-registro-cliente.module').then( m => m.FormRegistroClientePageModule)
+  },
+  {
+    path: 'form-registro-poliza',
+    loadChildren: () => import('./form-registro-poliza/form-registro-poliza.module').then( m => m.FormRegistroPolizaPageModule)
+  },
+ 
 ];
 
 @NgModule({

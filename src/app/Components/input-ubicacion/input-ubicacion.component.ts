@@ -137,7 +137,7 @@ export class InputUbicacionComponent implements OnInit {
   }
 
   
-  initAutocomplete(el = "autocomplete", options = { types: ["geocode"], componentRestrictions: { country: "ar" }}, fields = ["address_components", "geometry", "icon", "name"]) {
+  initAutocomplete(el = "autocomplete", options = { types: ["geocode"], componentRestrictions: { country: "us" }}, fields = ["address_components", "geometry", "icon", "name"]) {
     // Create the autocomplete object, restricting the search predictions to geographical location types.
     this.autocomplete = new google.maps.places.Autocomplete(
         document.getElementById(el).getElementsByTagName('input')[0], options

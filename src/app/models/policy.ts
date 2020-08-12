@@ -25,8 +25,8 @@ export class Policy{
     public number_of_members ="";
     public payable_agent_id="";
 
-    public comments:Comment[] = [];
-    public files:File[] = [];
+    public comments: Comment[] = [];
+    public files: File[] = [];
 
 
 	constructor(

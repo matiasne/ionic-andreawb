@@ -25,14 +25,16 @@ imports: [
     HeaderComponent,
     ListBaseComponent,
     TableComponent,
-    ItemDirective
+    ItemDirective,
+    InputUbicacionComponent
   ],
   exports: [
     SeleccionarImagenComponent,
     HeaderComponent,
     ListBaseComponent,
     TableComponent,
-    ItemDirective
+    ItemDirective,
+    InputUbicacionComponent
   ]
 })
 export class ComponentsModule {}

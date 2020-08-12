@@ -1,25 +1,23 @@
-<div class="ion-padding">
-<ion-text>
-  <h4>Dirección</h4>
-</ion-text>
-<div>
-  <ion-input id="pac-input" [(ngModel)]="localizacion.address.location"  type="text"  ></ion-input>
-</div>
-<ion-row>
-  <ion-col >
-    <h4>Piso</h4>
-    <div>
-      <ion-input name="piso" type="text" [(ngModel)]="localizacion.address.floor_number" (change)='onChange()'></ion-input>
-    </div>
-  </ion-col>
-  <ion-col>
-    <h4>Puerta</h4>
-    <div>
-      <ion-input name="puerta" type="text" [(ngModel)]="localizacion.address.door_number" (change)='onChange()'></ion-input>
-    </div>
-  </ion-col>
-</ion-row>  
-<div class="map-container">
-  <div id="mapDiv" class="map"></div>
-</div>  
+<ion-item>
+  <ion-label position="floating">Address</ion-label>  
+  <ion-input id="pac-input" [(ngModel)]="localizacion.address.location"  type="text"  ></ion-input>  
+</ion-item> 
+<div class="ion-padding"> 
+  <ion-row class="row">
+    <ion-col class="col">  
+      <div>
+        <ion-label position="floating">Floor</ion-label>  
+        <ion-input name="piso" type="text" [(ngModel)]="localizacion.address.floor_number" (change)='onChange()'></ion-input>
+      </div>
+    </ion-col>
+    <ion-col class="col">
+      <div>
+        <ion-label position="floating">Door</ion-label>  
+        <ion-input name="puerta" type="text" [(ngModel)]="localizacion.address.door_number" (change)='onChange()'></ion-input>
+      </div>
+    </ion-col>
+  </ion-row>  
+  <div class="map-container">
+    <div id="mapDiv" class="map"></div>
+  </div>  
 </div>
