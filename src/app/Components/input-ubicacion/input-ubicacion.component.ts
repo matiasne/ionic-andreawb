@@ -38,10 +38,7 @@ export class InputUbicacionComponent implements OnInit {
 
   constructor() {     
     this.localizacion = new Localizacion(); 
-
-  }
-
-  
+  }  
 
   ngOnInit() {  
 

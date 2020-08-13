@@ -1,20 +1,13 @@
 <ion-toolbar >
-  <div class="header-logo" slot="end">
-    <img src="../../../assets/icon/logo.svg" alt="">
-  </div>
-  <!--<ion-title class="isologo" *ngIf="titulo == ''">
-    <img src="../../../assets/isologo.svg" alt="">
-  </ion-title>-->
+
   <ion-title class="isologo" *ngIf="titulo != ''">
     <h3>{{titulo}}</h3>
   </ion-title>
-  <ion-buttons *ngIf="icono == 'add'" class="header-logo" slot="start" (click)="agregar()">
-    <img src="../../../assets/iconos/icono_agregar.svg" alt="+">
-  </ion-buttons>
-  <ion-buttons *ngIf="icono == 'close'" class="header-logo" slot="start" (click)="atras()">
-    <img src="../../../assets/iconos/icono_cancelar.svg" alt="">
+ 
+  <ion-buttons *ngIf="icono == 'close'" class="header-logo" slot="end" (click)="close()">
+    <ion-icon name="close-outline"></ion-icon>
   </ion-buttons> 
   <ion-buttons *ngIf="icono == 'back'" class="header-logo" slot="start" (click)="atras()">
-    <img src="../../../assets/iconos/icono_flecha_back.svg" alt="">
+    <ion-icon name="arrow-back-outline"></ion-icon>
   </ion-buttons>
 </ion-toolbar>

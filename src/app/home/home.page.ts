@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { BaseCrudFirestoreService } from '../Services/base-crud-firestore.service';
+import { snapshotChanges } from 'angularfire2/database';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +14,16 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     private modalCtrl: ModalController, //para manejar los modales de seleccion de clientes e inmuebles
-  ) { }
+    private baseFireStore:BaseCrudFirestoreService
+  ) { 
+    this.baseFireStore.setPath("clientes");
+  }
 
-  ngOnInit() {
-    
+  ngOnInit() {   
+
+   
+
+   
   }
 
   

@@ -4,14 +4,12 @@ export class Usuario{
     
     public id = "";
     public gender = "";
-    public date_of_birth = "";
+    public dateOfBirth = "";
     public address:Localizacion;
     public phone = "";
     public email = "";
 
-	constructor(
-		
-		){
+	constructor(){
     }
     
     public asignarValores(init?: Partial<Usuario>) {

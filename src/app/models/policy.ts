@@ -10,20 +10,20 @@ class File{
 
 export class Policy{
     public id ="";
-    public broker_id = "";
+    public brokerId = "";
     public number = ""; 
-    public client_id = ""; //responsable
-    public clientes_members_id = []; //familiares
-    public received_date = "";
-    public effective_date = "";
-    public policy_term_date = "";
-    public paid_through_date ="";
+    public clientId = ""; //responsable
+    public clientesMembersId = []; //familiares
+    public receivedDate = "";
+    public effectiveDate = "";
+    public policyTermDate = "";
+    public paidThroughDate ="";
     public state ="";
     public responsibility ="";
     public autoplay ="";
-    public elegible_for_commission ="";
-    public number_of_members ="";
-    public payable_agent_id="";
+    public elegibleForCommission ="";
+    public numberOfMembers ="";
+    public payableAgentId="";
 
     public comments: Comment[] = [];
     public files: File[] = [];

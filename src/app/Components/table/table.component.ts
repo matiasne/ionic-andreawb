@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { BaseCrudFirestoreService } from 'src/app/Services/base-crud-firestore.service';
 
 export interface Data {
   movies: string;
@@ -13,42 +14,20 @@ export interface Data {
 export class TableComponent implements OnInit {
 
   public data: Data;
-  public columns: any;
-  public rows: any;
+  @Input() columns: any;
+  @Input() rows: any;
 
 
-  constructor() {
+  constructor(
+  ) {
 
-    this.rows = [
-      {
-        "name": "Ethel Price",
-        "gender": "female",
-        "age": 22
-      },
-      {
-        "name": "Claudine Neal",
-        "gender": "female",
-        "age": 55
-      },
-      {
-        "name": "Beryl Rice",
-        "gender": "female",
-        "age": 67
-      },
-      {
-        "name": "Simon Grimm",
-        "gender": "male",
-        "age": 28
-      }
-    ];
-
-    this.columns = [
-      { name: 'Name' },
-      { name: 'Company' },
-      { name: 'Genre' }
-    ];
+    
    }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    
+
+  }
 
 }

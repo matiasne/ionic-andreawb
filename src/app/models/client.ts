@@ -1,11 +1,13 @@
 import { Localizacion } from './localizacion';
+import { UsuarioService } from '../Services/usuario.service';
 
 export class Client{
-    
-    public id = "";
-    public name = "";
+    public id ="";
+    public agentId="";
+    public firstName = "";
+    public lastName = "";
     public gender = "";
-    public date_of_birth = "";
+    public dateOfBirth = "";
     public address: Localizacion;
     public phone = "";
     public altphone = "";
@@ -15,6 +17,7 @@ export class Client{
 	constructor(
 		
 		){
+            this.address = new Localizacion();
     }
     
     public asignarValores(init?: Partial<Client>) {

@@ -1,15 +1,14 @@
 export class Commission{
     public id ="";
-    public broker_id = "";
-    public client_id = "";
+    public brokerId = "";
+    public clientId = "";
     public state ="";
     public rate = "";
-    public number_of_members ="";
-    public effective_date = "";
-    public commision_date = "";    
-    public statement_date = "";
-    public commission_amount ="";
-    public policy_number ="";
+    public effectiveDate = "";
+    public commisionDate = "";    
+    public statementDate = "";
+    public commissionAmount ="";
+    public policyNumber ="";
 
 	constructor(
 		

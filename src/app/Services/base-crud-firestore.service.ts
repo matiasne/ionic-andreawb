@@ -8,18 +8,23 @@ import { map } from 'rxjs/operators';
 })
 export class BaseCrudFirestoreService {
 
- 
   protected collection: AngularFirestoreCollection;
 
-  path ="";
+  public path:string ="";
   
-  constructor(path: string, protected afs: AngularFirestore) {
+  constructor(
+      protected afs: AngularFirestore
+      ) {
+    
+  }
+
+  public setPath(path){
     this.path = path;
     this.collection = this.afs.collection(path);
   }
 
   get(identifier: string) {
-    console.log(`[BaseService] get: ${identifier}`);
+    console.log('[BaseService] get: ${identifier}');
 
     return this.collection
         .doc(identifier)
@@ -38,7 +43,9 @@ export class BaseCrudFirestoreService {
 
 
   list() {
-      console.log(`[BaseService] list`);
+      console.log('[BaseService] list');
+
+      
 
       return this.collection
           .snapshotChanges()
@@ -47,10 +54,14 @@ export class BaseCrudFirestoreService {
                   return changes.map(a => {
                       const data = a.payload.doc.data();
                       data.id = a.payload.doc.id;
+                      data.fromCache = a.payload.doc.metadata.fromCache;
                       return data;
                   });
               })
           );
+
+
+          
     }
 
     search(palabra,ordenBy,ultimo){
@@ -88,10 +99,13 @@ export class BaseCrudFirestoreService {
     }
 
     add(item) {
+
+      const data = JSON.parse(JSON.stringify(item));
+
       console.log('[BaseService] adding item', item);
   
       const promise = new Promise((resolve, reject) => {
-          this.collection.add(item).then(ref => {
+          this.collection.add(data).then(ref => {
               const newItem = {
                   id: ref.id,
                   /* workaround until spread works with generic types */
@@ -104,7 +118,11 @@ export class BaseCrudFirestoreService {
   }
   
   
-  update(item) {
+  update(data) {
+
+    const item = JSON.parse(JSON.stringify(data));
+
+        console.log(item)
       console.log(`[BaseService] updating item ${item.id}`);
   
       const promise = new Promise((resolve, reject) => {

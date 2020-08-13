@@ -5,10 +5,11 @@
 export const environment = {
   url:'https://testing.api.keysapp.com.ar/v1/',
   production: false,
-  firebase: {
-    vapidKey: 'BHUdiY42pvD9H_f7RwPS0sKVJ72fQtkp05Yg1T6Nj8uq0bH2tJKblUxfUVizAGmQ7qx_jqWrAFL_NS6h86P41q8'
+  serverKey: 'AAAAxyLigj8:APA91bFU8sovIsO9_i-tYZuRHsO6T7KQ-YW_pp52pLbWg2ovR2xTGswh4KeAg6jtBI-e_K4B-IRjvNYbY2aJtLhN06egiT6Zk8Iqm05QCz2zgjf78etmf005Baj_XA0IjHh8ZWGhVLsv',
+  firebase: { //para las push notifications
+    vapidKey: 'BN0uJKwH2WUhjQFg7HkAYR8V8eoCM77kHUQzO124aTt530qs1M4gUq4gDoPWSNOwpge5A4IsT55YrinEpncoMhM'
   },
-  webClientId:"707543111222-rc4hi4fq35ngvunrspk56o10822sbv9l.apps.googleusercontent.com"
+  webClientId:"855283761727-t6tr49r1mkn8uj02dcpouqn0045qrvbv.apps.googleusercontent.com" //para login
 };
 
 /*

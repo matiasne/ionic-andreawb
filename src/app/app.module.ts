@@ -41,14 +41,14 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAYAbLJnwJPwltC6tC1NaPjryYuIKTB1zM",
-  authDomain: "gestionsocialup.firebaseapp.com",
-  databaseURL: "https://gestionsocialup.firebaseio.com",
-  projectId: "gestionsocialup",
-  storageBucket: "gestionsocialup.appspot.com",
-  messagingSenderId: "304287906727",
-  appId: "1:304287906727:web:b7e9cdb7f3ddd8bf93d482",
-  measurementId: "G-PDRLW20SDT"
+  apiKey: "AIzaSyAPayDz557b1y2D_dp5aM32SxA0b1rcK2o",
+  authDomain: "andrea-wille-bille.firebaseapp.com",
+  databaseURL: "https://andrea-wille-bille.firebaseio.com",
+  projectId: "andrea-wille-bille",
+  storageBucket: "andrea-wille-bille.appspot.com",
+  messagingSenderId: "855283761727",
+  appId: "1:855283761727:web:b4c9e2c38d580827a22e8a",
+  measurementId: "G-SV8D5XJSEN"
 };
 
 @NgModule({
@@ -90,6 +90,7 @@ const firebaseConfig = {
     FCM,
     AngularFirestore,
     BarcodeScanner,
+    EmailComposer,
     CallNumber, 
     EmailComposer,
     SpeechRecognition,

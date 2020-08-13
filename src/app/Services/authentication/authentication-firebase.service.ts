@@ -12,13 +12,14 @@ import { AngularFirestoreDocument, AngularFirestore } from 'angularfire2/firesto
 import { ToastService } from '../toast.service';
 import { UsuarioService } from '../usuario.service';
 import { User } from 'src/app/models/user';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationFirebaseService {
 
-  private webClientId= "707543111222-rc4hi4fq35ngvunrspk56o10822sbv9l.apps.googleusercontent.com";
+  //private webClientId= "707543111222-rc4hi4fq35ngvunrspk56o10822sbv9l.apps.googleusercontent.com";
   
   private httpHeaders = new HttpHeaders({
     'Content-Type' : 'application/json',
@@ -216,7 +217,7 @@ export class AuthenticationFirebaseService {
       let params;
       if (this.platform.is('android')) {
         params = {
-          'webClientId': this.webClientId,
+          'webClientId': environment.webClientId,
           'offline': true,
           'scopes': 'profile email'
         }

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClientesService } from '../Services/cliente.service';
 import { Client } from '../models/client';
 import { PolizaService } from '../Services/poliza.service';
+import { ToastService } from '../Services/toast.service';
 
 @Component({
   selector: 'app-form-registro-poliza',
@@ -19,23 +20,24 @@ export class FormRegistroPolizaPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private clienteService: ClientesService,
-    private polizaService: PolizaService
+    private polizaService: PolizaService,
+    private toastService:ToastService
   ) { 
     this.datosForm = this.formBuilder.group({
       id: [''],
       broker_id: [''],
       number: ['', Validators.required],
       client: ['', Validators.required],
-      client_members: [[]],
-      received_date: [null, Validators.required],
-      effective_date: [null, Validators.required],
-      policy_term_date: [null, Validators.required],
-      paid_through_date: [null, Validators.required],
+      clientMembers: [[]],
+      receivedDate: [null, Validators.required],
+      effectiveDate: [null, Validators.required],
+      policyTermDate: [null, Validators.required],
+      paidThroughDate: [null, Validators.required],
       state: ['', Validators.required],
       responsability: ['', Validators.required],
       autoplay: ['', Validators.required],
-      elegible_for_commission: [''],
-      number_of_members: ['', Validators.required],
+      elegibleForCommission: [''],
+      number_ofMembers: ['', Validators.required],
       payable_agent_id: [''],
     });
     this.poliza = new Policy();
@@ -50,6 +52,11 @@ export class FormRegistroPolizaPage implements OnInit {
   registrar(){
 
     this.submitted = true;
+    if (this.datosForm.invalid) {
+      this.toastService.mensaje("","Por favor completar todos los campos solicitados")
+      return
+    } 
+
     this.poliza.asignarValores(this.datosForm.value);
     
     //this.PolizaService.create(this.poliza);

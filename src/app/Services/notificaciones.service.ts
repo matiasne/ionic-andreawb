@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Notificacion } from '../models/notificacion';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class NotificacionesService {
     
     this.httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json',
-      'Authorization': 'key=AAAARtj4-6c:APA91bGXaI69tq_Uhs8rIvUcaOTZkBw7pVgg30FCBJcz4zAu_tOizyzGN61J1e0t4W-oGvxjxPWMMUyW_C7Xnqq0oS2AlkrvbT9VpdagcnXnXhDL80A-kLuXF325hqzg44CnSGUTwUCQ'
+      'Authorization': 'key='+environment.serverKey,
     });   
  
     let options = {

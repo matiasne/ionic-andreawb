@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
+import { ParametrosService } from 'src/app/Services/global/parametros.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     public router:Router,
-    public navCtrl:NavController
+    public navCtrl:NavController,
+    public modalCtrl:ModalController,
+    public parametrosService:ParametrosService
   ) { 
   
   }
@@ -33,6 +36,11 @@ export class HeaderComponent implements OnInit {
   atras(){
     this.volver.emit();
     this.navCtrl.back();  
+  }
+
+  close(){
+    this.parametrosService.param = "";
+    this.modalCtrl.dismiss();
   }
 
 }

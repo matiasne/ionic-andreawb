@@ -6,6 +6,8 @@ import { ToastService } from '../Services/toast.service';
 import { ClientesService } from '../Services/cliente.service';
 import { Client } from '../models/client';
 import { AuthenticationFirebaseService } from '../Services/authentication/authentication-firebase.service';
+import { UsuarioService } from '../Services/usuario.service';
+import { ParametrosService } from '../Services/global/parametros.service';
 
 
 @Component({
@@ -18,22 +20,38 @@ export class FormRegistroClientePage implements OnInit {
   cliente: Client;
   datosForm: FormGroup;
   submitted = false;
-  
+  isEditing = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private clienteService: ClientesService,
+    private toastService:ToastService,
+    private usuarioService:UsuarioService,
+    private clientesService:ClientesService,
+    private parametrosService:ParametrosService,
+    private modalController:ModalController
   ) { 
     this.datosForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      id:['',null],
+      agentId:['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       gender: ['', Validators.required],
-      date_of_birth: [null, Validators.required],
+      dateOfBirth: [null, Validators.required],
       address: ['', Validators.required],
       phone: ['', Validators.required],
+      altphone:['',null],
       email: ['', Validators.required],
-      altphone: [''],
       status: ['', Validators.required]
     });
     this.cliente = new Client();
+
+    if(this.parametrosService.param instanceof Client){
+      this.isEditing = true;
+      console.log(this.parametrosService.param)
+      this.cliente = this.parametrosService.param;
+      this.datosForm.patchValue(this.parametrosService.param)
+    }
   }
 
   ngOnInit() {
@@ -43,42 +61,40 @@ export class FormRegistroClientePage implements OnInit {
 
   registrar(){
 
-    this.submitted = true;
+    this.submitted = true;     
+
+    this.datosForm.patchValue({
+      agentId: this.usuarioService.getUID()
+    });
+
+    if(this.datosForm.invalid){
+      this.toastService.mensaje("","Por favor completar todos los campos solicitados")
+      return
+    }  
+
     this.cliente.asignarValores(this.datosForm.value);
+    console.log(this.cliente);
+
+    if(this.isEditing){
+      this.clienteService.update(this.cliente).then(data =>{
+        console.log(data);
+      })
+    }
+    else{
+      this.clienteService.add(this.cliente).then(data =>{
+        console.log(data);
+      })
+    }   
+
+    this.parametrosService.param = "";
+    this.modalController.dismiss();
     
-    //this.clienteService.create(this.cliente);
-    //this.datosForm.reset();
-    /*this.authService.registrar(this.datosForm.value).subscribe(response =>{
-      var resp:any = response;
-      console.log(resp.data.data);
-      localStorage.setItem('token',resp.data.token);
-      localStorage.setItem('user',JSON.stringify(resp.data.user));
-      this.authService.authenticationState.next(true);
-      this.router.navigate(['/tabs/home']);
-    },err=>{
-      if(err.status == 0){
-        //this.presentAlert("No fue posible conectarnos a nuestros servidores, por favor verifica tu conexión");
-        this.presentToast("No fue posible conectarnos a nuestros servidores, por favor verifica tu conexión");
-      }
-      //email: test_user_53751378@testuser.com
-      //password: Yobs2020
-      console.log(err);
-      let mensaje: string = '';
-      Object.keys(err.error.errors).forEach((key,index)=> {
-        // key: the name of the object key
-        // index: the ordinal position of the key within the object 
-        //this.authService.authenticationState.next(false);
-        console.log(err.error.errors[key][0])
-        mensaje += err.error.errors[key][0] + '\n';
-        //this.presentToast(err.error.errors[key][0]);
-        //this.presentAlert(err.error.errors[key][0]);
-      });
-      this.toast(mensaje);
-    })*/
   }
 
   setValue(newValue: any){
-    this.f.address = newValue.address;
+    this.datosForm.patchValue({
+      address:newValue.address
+    })
   }
 
 }

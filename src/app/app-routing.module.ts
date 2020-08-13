@@ -41,7 +41,19 @@ const routes: Routes = [
   {
     path: 'form-registro-poliza',
     loadChildren: () => import('./form-registro-poliza/form-registro-poliza.module').then( m => m.FormRegistroPolizaPageModule)
+  },  {
+    path: 'table-clientes',
+    loadChildren: () => import('./table-clientes/table-clientes.module').then( m => m.TableClientesPageModule)
   },
+  {
+    path: 'table-polizas',
+    loadChildren: () => import('./table-polizas/table-polizas.module').then( m => m.TablePolizasPageModule)
+  },
+  {
+    path: 'table-comisiones',
+    loadChildren: () => import('./table-comisiones/table-comisiones.module').then( m => m.TableComisionesPageModule)
+  },
+
  
 ];
 
