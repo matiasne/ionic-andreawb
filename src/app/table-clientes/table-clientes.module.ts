@@ -9,6 +9,7 @@ import { TableClientesPageRoutingModule } from './table-clientes-routing.module'
 import { TableClientesPage } from './table-clientes.page';
 import { ComponentsModule } from '../Components/components.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ArchivosCSVService } from '../Services/archivos-csv.service';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     IonicModule,
     TableClientesPageRoutingModule
   ],
-  declarations: [TableClientesPage]
+  declarations: [TableClientesPage],
+  providers: [ArchivosCSVService]
 })
 export class TableClientesPageModule {}

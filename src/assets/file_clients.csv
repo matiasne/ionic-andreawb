@@ -1,0 +1,4 @@
+Id,Agent Id,First Name,Last Name, Gender,Date of Birth, Address,Phone,Alt Phone,Email,Status
+1,2,marco,Polo,male,22/03/98,asdtndoin poasopd,1322215651,2341124,asdf@asdf.com,active
+2,3,stan,lee,male,15/10/45,fasdf fda a df,23434431,76546747,asdfaf@asdf.com,pending
+3,5,julia,roberts,female,26/08/64, asf das afd fdsa,12344324,123 432,asdad@fdfasdf.com,inactive

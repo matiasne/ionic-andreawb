@@ -5,6 +5,8 @@ import { ModalController } from '@ionic/angular';
 import { FormRegistroClientePage } from '../form-registro-cliente/form-registro-cliente.page';
 import { ParametrosService } from '../Services/global/parametros.service';
 import { Client } from '../models/client';
+import { ArchivosCSVService } from '../Services/archivos-csv.service';
+import * as papa from 'papaparse';
 
 @Component({
   selector: 'app-table-clientes',
@@ -13,15 +15,22 @@ import { Client } from '../models/client';
 })
 export class TableClientesPage implements OnInit {
 
-  public Allrows = [];
+  public allRows = [];
   public rows =[];
   public palabraFiltro = "";
+  estadoActivo=true;
+  estadoInactivo=true;
+  estadoPending = true;
+
+  //csvData: any[] = [];
+  //headerRow: string[] = ['Id', 'Agent Id', 'First Name', 'Last Name', 'Gender', 'Date of Birth', 'Address', 'Phone', 'Alt Phone', 'Email', 'Status'];
 
   constructor(
     private baseFireStore:BaseCrudFirestoreService,
     private emailComposer: EmailComposer,
     private modalController:ModalController,
-    private parametrosService:ParametrosService
+    private parametrosService:ParametrosService,
+    private archivosCsv: ArchivosCSVService
   ) {
     this.baseFireStore.setPath("clientes");
    }
@@ -29,7 +38,7 @@ export class TableClientesPage implements OnInit {
   ngOnInit() {
 
     this.baseFireStore.list().subscribe(snapshot =>{
-      this.Allrows = snapshot;
+      this.allRows = snapshot;
       console.log(this.rows)
       this.buscar();
     })
@@ -44,38 +53,30 @@ export class TableClientesPage implements OnInit {
 
 
   buscar(){ 
-
     if(this.palabraFiltro != ""){
-
       var palabra = this.palabraFiltro.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-     var retorno = false;
-
+      var retorno = false;
       this.rows = [];
-      
-      this.Allrows.forEach(item => {      
-  
+      this.allRows.forEach(item => {      
         var encontrado = false;
         if(item.firstName){
           retorno =  (item.firstName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
           if(retorno)
             encontrado = true;
         }
-
         if(item.LastName){
           retorno =  (item.LastName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
           if(retorno)
             encontrado = true;
         }         
-       
         if(encontrado){
           this.rows.push(item);
           return true;
         }
-
       });   
     }
     else{
-      this.rows = this.Allrows;
+      this.rows = this.allRows;
     }
   }
 
@@ -109,6 +110,56 @@ export class TableClientesPage implements OnInit {
       component: FormRegistroClientePage
     });
     modal.present();
+  }
+
+  seleccionarArchivo(event){
+    console.log('archivo seleccionado', event);
+    this.archivosCsv.readCsvData(event.detail.value);
+  }
+
+  exportar(){
+    console.log('exportar');
+    console.log('data', this.allRows);
+    this.archivosCsv.downloadCSV(this.allRows);
+  }
+
+  changeActive(event){
+    console.log('changeActive', event.detail.checked);
+    this.estadoActivo = event.detail.checked; //cambiamos el estado conforme al valor del check
+    this.filtrarPorEstado(); //llamamos a la función filtrar
+  }
+
+  changeInactive(event){
+    this.estadoInactivo = event.detail.checked; //cambiamos el estado conforme al valor del check
+    this.filtrarPorEstado();//llamamos a la función filtrar
+  }
+
+  changePending(event){
+    this.estadoPending = event.detail.checked; //cambiamos el estado conforme al valor del check
+    this.filtrarPorEstado();//llamamos a la función filtrar
+  }
+
+  filtrarPorEstado(){
+    var retorno = false;
+    this.rows = [];
+    this.allRows.forEach(item => {      
+      var encontrado = false;
+      if(this.estadoActivo && item.status==='active'){ 
+        //si estadoActivo es true y el item tiene el estado active
+        //lo incorporamos al array
+        this.rows.push(item);
+      }
+      if(this.estadoInactivo && item.status==='inactive'){
+        //si estadoInactivo es true y el item tiene el estado inactivo
+        //lo incorporamos al array
+        this.rows.push(item);
+      } 
+      if(this.estadoPending && item.status==='pending'){
+         //si estadoPending es true y el item tiene el estado pendiente
+        //lo incorporamos al array
+        this.rows.push(item);
+      } 
+    });   
   }
 
 }

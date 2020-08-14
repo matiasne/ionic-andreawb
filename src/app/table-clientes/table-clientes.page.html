@@ -7,7 +7,7 @@
 <ion-content>
 
   <ion-row>
-    <ion-col>
+    <ion-col size="5">
       <ion-searchbar animated 
         [placeholder]="placeholder" 
         showCancelButton="never" 
@@ -20,7 +20,30 @@
         (ionChange)="onChange($event)">
       </ion-searchbar>
     </ion-col>
-    <ion-col></ion-col>
+    <ion-col size="7">
+      <ion-row>
+        <ion-item>
+          <ion-label>Active</ion-label>
+          <ion-checkbox color="primary" checked slot="start" (ionChange)="changeActive($event)"></ion-checkbox>
+        </ion-item> 
+        <ion-item>
+          <ion-label>Inactive</ion-label>
+          <ion-checkbox color="primary" checked slot="start" (ionChange)="changeInactive($event)"></ion-checkbox>
+        </ion-item> 
+        <ion-item>
+          <ion-label>Pending</ion-label>
+          <ion-checkbox color="primary" checked slot="start" (ionChange)="changePending($event)"></ion-checkbox>
+        </ion-item>   
+        <ion-col>
+          <ion-input type="file" acept=".csv, .txt" webkitdirectory (ionChange)="seleccionarArchivo($event)"></ion-input>
+          
+          <ion-button (click)="exportar()">
+            <ion-icon name="exit" slot="start"></ion-icon>
+            Export
+          </ion-button>
+        </ion-col>
+      </ion-row>  
+    </ion-col>
   </ion-row>
   
 
