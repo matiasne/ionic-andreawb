@@ -53,6 +53,10 @@ const routes: Routes = [
     path: 'table-comisiones',
     loadChildren: () => import('./table-comisiones/table-comisiones.module').then( m => m.TableComisionesPageModule)
   },
+  {
+    path: 'select-cliente',
+    loadChildren: () => import('./select-cliente/select-cliente.module').then( m => m.SelectClientePageModule)
+  },
 
  
 ];

@@ -1,3 +1,5 @@
+import { DocumentReference } from 'angularfire2/firestore';
+
 class Comment {
     sender_id ="";
     text="";
@@ -10,10 +12,10 @@ class File{
 
 export class Policy{
     public id ="";
-    public brokerId = "";
+    public agentId = "";
     public number = ""; 
-    public clientId = ""; //responsable
-    public clientesMembersId = []; //familiares
+    public clientRef:any; //responsable
+    public familyMembersRef = []; //familiares
     public receivedDate = "";
     public effectiveDate = "";
     public policyTermDate = "";
@@ -22,8 +24,6 @@ export class Policy{
     public responsibility ="";
     public autoplay ="";
     public elegibleForCommission ="";
-    public numberOfMembers ="";
-    public payableAgentId="";
 
     public comments: Comment[] = [];
     public files: File[] = [];

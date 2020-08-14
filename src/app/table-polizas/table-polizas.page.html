@@ -1,9 +1,79 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>table-polizas</ion-title>
+    <ion-title>table-clientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-row>
+    <ion-col>
+      <ion-searchbar animated 
+        [placeholder]="placeholder" 
+        showCancelButton="never" 
+        color="light" 
+        autocomplete="on"
+        enterkeyhint="send"
+        inputmode="text"
+        type="text"
+        debounce="500"
+        (ionChange)="onChange($event)">
+      </ion-searchbar>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  
+
+<ngx-datatable 
+[rows]="rows" 
+class="material" 
+[limit]="8"
+[loadingIndicator]="loadingIndicator"
+[columnMode]="'force'" 
+[headerHeight]="50" 
+[footerHeight]="50" 
+[rowHeight]="'auto'"
+[columns]="columns" 
+[reorderable]="reorderable">
+
+  <ngx-datatable-column  name="First Name"> </ngx-datatable-column>
+  <ngx-datatable-column  name="Last Name"> </ngx-datatable-column>
+  <ngx-datatable-column  name="Phone"> 
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <a href="https://wa.me/{{row.phone}}">{{row.phone}}</a>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column  name="Email"> 
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <a href="mailto:{{row.email}}">{{row.email}}</a>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Status" [resizeable]="false">
+    <ng-template ngx-datatable-header-template>
+      Status
+    </ng-template>
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <ion-select placeholder="Select one" (ionChange)="changeStatus(row,$event)" value="{{row.status}}" name="status">
+        <ion-select-option value="Active">Active</ion-select-option>
+        <ion-select-option value="Inactive">Inactive</ion-select-option>
+        <ion-select-option value="Pending">Pending</ion-select-option>
+      </ion-select>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column> 
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <ion-button (click)="editar(row)" expand="block">
+        <ion-icon slot="start" name="create-outline"></ion-icon>
+      </ion-button>          
+    </ng-template>    
+  </ngx-datatable-column>
+</ngx-datatable>
+
+<ion-fab class="boton-flotante" horizontal="end" vertical="end" slot="fixed" (click)="agregar()">
+  <ion-fab-button color="primary">
+    <ion-icon name="add" ></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
 </ion-content>

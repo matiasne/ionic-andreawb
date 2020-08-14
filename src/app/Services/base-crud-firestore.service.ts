@@ -41,11 +41,13 @@ export class BaseCrudFirestoreService {
         );
   }
 
+  getRef(id){
+    return this.collection.doc(id).ref;
+  }
+
 
   list() {
-      console.log('[BaseService] list');
-
-      
+      console.log('[BaseService] list');    
 
       return this.collection
           .snapshotChanges()
@@ -58,10 +60,7 @@ export class BaseCrudFirestoreService {
                       return data;
                   });
               })
-          );
-
-
-          
+          );          
     }
 
     search(palabra,ordenBy,ultimo){
@@ -100,12 +99,14 @@ export class BaseCrudFirestoreService {
 
     add(item) {
 
-      const data = JSON.parse(JSON.stringify(item));
+      delete item.id;
 
-      console.log('[BaseService] adding item', item);
+      
+
+      console.log('[BaseService] adding item'+this.path);
   
       const promise = new Promise((resolve, reject) => {
-          this.collection.add(data).then(ref => {
+          this.collection.add(item).then(ref => {
               const newItem = {
                   id: ref.id,
                   /* workaround until spread works with generic types */
@@ -120,18 +121,15 @@ export class BaseCrudFirestoreService {
   
   update(data) {
 
-    const item = JSON.parse(JSON.stringify(data));
-
-        console.log(item)
-      console.log(`[BaseService] updating item ${item.id}`);
+      console.log(`[BaseService] updating item ${data.id}`);
   
       const promise = new Promise((resolve, reject) => {
       const docRef = this.collection
-          .doc(item.id)
-          .set(item)
+          .doc(data.id)
+          .set(data)
           .then(() => {
               resolve({
-                  ...(item as any)
+                  ...(data as any)
               });
           });
       });

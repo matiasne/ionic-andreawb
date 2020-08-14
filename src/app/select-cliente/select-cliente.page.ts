@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Policy } from '../models/policy';
-import { FormRegistroPolizaPage } from '../form-registro-poliza/form-registro-poliza.page';
+import { FormRegistroClientePage } from '../form-registro-cliente/form-registro-cliente.page';
+import { BaseCrudFirestoreService } from '../Services/base-crud-firestore.service';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { ModalController } from '@ionic/angular';
 import { ParametrosService } from '../Services/global/parametros.service';
-import { BaseCrudFirestoreService } from '../Services/base-crud-firestore.service';
 
 @Component({
-  selector: 'app-table-polizas',
-  templateUrl: './table-polizas.page.html',
-  styleUrls: ['./table-polizas.page.scss'],
+  selector: 'app-select-cliente',
+  templateUrl: './select-cliente.page.html',
+  styleUrls: ['./select-cliente.page.scss'],
 })
-export class TablePolizasPage implements OnInit {
+export class SelectClientePage implements OnInit {
 
   public Allrows = [];
   public rows =[];
   public palabraFiltro = "";
-
+  public modal:any;
   constructor(
+    private baseFireStore:BaseCrudFirestoreService,
+    private emailComposer: EmailComposer,
     private modalController:ModalController,
-    private parametrosService:ParametrosService,
-    private baseFireStore:BaseCrudFirestoreService
-  ) { 
-    this.baseFireStore.setPath("polizas");
-  }
+    private parametrosService:ParametrosService
+  ) {
+    this.baseFireStore.setPath("clientes");
+   }
 
   ngOnInit() {
 
@@ -33,6 +34,7 @@ export class TablePolizasPage implements OnInit {
     })
 
   }
+  
 
   onChange(event){
     this.palabraFiltro = event.target.value;
@@ -76,22 +78,18 @@ export class TablePolizasPage implements OnInit {
     }
   }
 
-
-  async editar(client){
-    let cliente = new Policy();
-    cliente.asignarValores(client);
-    this.parametrosService.param = cliente;
-    const modal = await this.modalController.create({
-      component: FormRegistroPolizaPage
-    });
-    modal.present();
+  seleccionar(event){
+    if(event.type == 'click') {
+      this.modalController.dismiss(event.row);
+    }
   }
 
-  async agregar(){
-    const modal = await this.modalController.create({
-      component: FormRegistroPolizaPage
-    });
-    modal.present();
+  async agregar(){   
+    this.modalController.dismiss("crear");    
+  }
+
+  clickIcono($event){
+    this.modalController.dismiss();
   }
 
 }

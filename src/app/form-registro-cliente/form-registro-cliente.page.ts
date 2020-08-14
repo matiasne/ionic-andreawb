@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { ParametrosService } from '../Services/global/parametros.service';
   styleUrls: ['./form-registro-cliente.page.scss'],
 })
 export class FormRegistroClientePage implements OnInit {
+  
   tipoRegistro: string = 'cliente';
   cliente: Client;
   datosForm: FormGroup;
@@ -75,19 +76,23 @@ export class FormRegistroClientePage implements OnInit {
     this.cliente.asignarValores(this.datosForm.value);
     console.log(this.cliente);
 
+    const item = JSON.parse(JSON.stringify(this.cliente)); 
+
     if(this.isEditing){
-      this.clienteService.update(this.cliente).then(data =>{
+      this.clienteService.update(item).then(data =>{
         console.log(data);
       })
     }
     else{
-      this.clienteService.add(this.cliente).then(data =>{
+      this.clienteService.add(item).then(data =>{
         console.log(data);
+        this.modalController.dismiss(data);
       })
     }   
 
-    this.parametrosService.param = "";
     this.modalController.dismiss();
+    this.parametrosService.param = "";
+    
     
   }
 
@@ -95,6 +100,10 @@ export class FormRegistroClientePage implements OnInit {
     this.datosForm.patchValue({
       address:newValue.address
     })
+  }
+
+  clickIcono($event){
+    this.modalController.dismiss();
   }
 
 }

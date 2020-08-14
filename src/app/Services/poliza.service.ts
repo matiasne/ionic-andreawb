@@ -4,18 +4,18 @@ import { HttpClient } from '@angular/common/http';
 import { UsuarioService } from './usuario.service';
 import { ToastService } from './toast.service';
 import { Observable } from 'rxjs';
+import { BaseCrudFirestoreService } from './base-crud-firestore.service';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PolizaService extends BaseCRUDService{
+export class PolizaService extends BaseCrudFirestoreService{
   constructor(
-    public httpClient: HttpClient,
-    public usuarioService:UsuarioService,
-    public toastService:ToastService
+    protected afs: AngularFirestore
   ) { 
     
-    super(httpClient,usuarioService,toastService);
-    this.setEndpoint("policy");
+    super(afs);
+    this.setPath("polizas");
   }
 }

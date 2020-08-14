@@ -27,6 +27,7 @@
 <ngx-datatable 
 [rows]="rows" 
 class="material" 
+[limit]="8"
 [loadingIndicator]="loadingIndicator"
 [columnMode]="'force'" 
 [headerHeight]="50" 
@@ -69,9 +70,9 @@ class="material"
   </ngx-datatable-column>
 </ngx-datatable>
 
-<ion-fab class="boton-flotante" horizontal="end" vertical="end" slot="fixed">
+<ion-fab class="boton-flotante" horizontal="end" vertical="end" slot="fixed" (click)="agregar()">
   <ion-fab-button color="primary">
-    <ion-icon name="add" (click)="agregar()"></ion-icon>
+    <ion-icon name="add" ></ion-icon>
   </ion-fab-button>
 </ion-fab>
 

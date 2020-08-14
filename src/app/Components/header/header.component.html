@@ -4,10 +4,8 @@
     <h3>{{titulo}}</h3>
   </ion-title>
  
-  <ion-buttons *ngIf="icono == 'close'" class="header-logo" slot="end" (click)="close()">
-    <ion-icon name="close-outline"></ion-icon>
+  <ion-buttons  class="header-logo" slot="end" (click)="click()">
+    <ion-icon *ngIf="icono == 'close'" name="close-outline"></ion-icon>
+    <ion-icon *ngIf="icono == 'back'" name="arrow-back-outline"></ion-icon>
   </ion-buttons> 
-  <ion-buttons *ngIf="icono == 'back'" class="header-logo" slot="start" (click)="atras()">
-    <ion-icon name="arrow-back-outline"></ion-icon>
-  </ion-buttons>
 </ion-toolbar>

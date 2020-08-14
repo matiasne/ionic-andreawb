@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() titulo = "";
   @Input() icono = "";
-  @Output() volver: EventEmitter<any> = new EventEmitter<any>();
+  @Output() clickIcono: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     public router:Router,
@@ -33,14 +33,15 @@ export class HeaderComponent implements OnInit {
     //console.log('header.agregar');
   }
 
-  atras(){
-    this.volver.emit();
-    this.navCtrl.back();  
+  click(){
+    this.clickIcono.emit();
+  //  this.navCtrl.back();  
   }
 
-  close(){
+  /*close(){
+    this.clickIcono.emit();
     this.parametrosService.param = "";
     this.modalCtrl.dismiss();
-  }
+  }*/
 
 }

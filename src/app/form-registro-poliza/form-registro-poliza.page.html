@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <app-header [titulo]="'Policy Registration'" [icono]="'back'"></app-header>
+    <app-header [titulo]="'Policy Registration'" [icono]="'close'" (click)='clickIcono($event)'></app-header>
   </ion-toolbar>
 </ion-header>
 
@@ -20,29 +20,7 @@
       </div>
     </ion-item>
 
-    <!--Cliente-->
-    <ion-item [class.invalid]="submitted && !datosForm.controls.client.valid" >
-      <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
-      <ion-label position="floating">Client</ion-label>     
-      <ion-input name="client" type="text" formControlName="client" required ></ion-input>
-      <ion-button slot="end" color="primary" (click)="addClient()">+</ion-button>
-      <div *ngIf="submitted && f.client.errors" class="invalid-feedback">
-        <div *ngIf="f.client.errors.required">
-          <h5>Enter a client</h5>
-        </div>
-      </div>
-    </ion-item>
-
-    <!--Clientes miembros-->
-    <ion-item >
-      <ion-icon name="people-outline" slot="start" color="primary"></ion-icon>
-      <ion-label position="floating">Family's members</ion-label>     
-      <ion-select placeholder="Select one or more" formControlName="clientMembers" name="clientMembers"
-                  multiple="true">
-        <ion-select-option *ngFor="let client of clientes">{{client.name}}</ion-select-option>  
-      </ion-select>
-      <ion-button slot="end" color="primary" (click)="addClient()">+</ion-button>
-    </ion-item>
+    
 
     <!--Fecha  recibido-->
     <ion-item [class.invalid]="submitted && !datosForm.controls.receivedDate.valid" >
@@ -146,6 +124,33 @@
           <h5>Select one</h5>
         </div>
       </div>
+    </ion-item>
+
+    <ion-item [class.invalid]="submitted && !datosForm.controls.clientRef.valid">
+      <ion-label>Client</ion-label>     
+      <ion-button slot="end" color="primary" (click)="addClient()">+</ion-button>
+      <div *ngIf="submitted && f.clientRef.errors" class="invalid-feedback">
+        <div *ngIf="f.clientRef.errors.required">
+          <h5>Enter a client</h5>
+        </div>
+      </div>
+    </ion-item>     
+    <ion-item *ngIf="client.id">
+      <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+      {{client.firstName}} {{client.lastName}}
+      <ion-icon name="trash-outline" slot="end" color="primary" (click)="deleteClient()"></ion-icon>
+    </ion-item>
+
+    <!--Clientes miembros-->
+    <ion-item>
+      <ion-label>Family's members</ion-label>     
+      <ion-button slot="end" color="primary" (click)="addFamily()">+</ion-button>
+    </ion-item>
+
+    <ion-item *ngFor="let miembro of familyMembers;let i= index">
+      <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+      {{miembro.firstName}} {{miembro.lastName}} 
+      <ion-icon name="trash-outline" slot="end" color="primary"  (click)="deleteFamily(i)"></ion-icon>
     </ion-item>
 
 

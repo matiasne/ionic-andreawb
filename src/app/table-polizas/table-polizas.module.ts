@@ -8,11 +8,13 @@ import { TablePolizasPageRoutingModule } from './table-polizas-routing.module';
 
 import { TablePolizasPage } from './table-polizas.page';
 import { ComponentsModule } from '../Components/components.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
+    NgxDatatableModule,
     FormsModule,
     IonicModule,
     TablePolizasPageRoutingModule
