@@ -9,26 +9,22 @@
                 
         <ion-list id="inbox-list" *ngIf="usuario">         
           <ion-menu-toggle auto-hide="false" >
-            <ion-item (click)="cerrarSesion()" routerDirection="root" lines="none" detail="false">
-              <ion-icon slot="start" name="home-outline"></ion-icon>
-              <ion-label>Sucursal</ion-label>
-            </ion-item>
-            <ion-item (click)="cerrarSesion()" routerDirection="root" lines="none" detail="false">
-              <ion-icon slot="start" name="home-outline"></ion-icon>
-              <ion-label>Inmuebles</ion-label>
-            </ion-item>
-            <ion-item (click)="cerrarSesion()" routerDirection="root" lines="none" detail="false">
-              <ion-icon slot="start" name="calendar-outline"></ion-icon>
-              <ion-label>Eventos</ion-label>
-            </ion-item>
-            <ion-item (click)="cerrarSesion()" routerDirection="root" lines="none" detail="false">
+            <ion-item  *ngIf="usuario.rolAgente" routerLink="/table-clientes" routerDirection="root" lines="none" detail="false">
               <ion-icon slot="start" name="people-circle-outline"></ion-icon>
-              <ion-label>Agentes</ion-label>
+              <ion-label>Clients</ion-label>
             </ion-item>
-            <ion-item (click)="cerrarSesion()" routerDirection="root" lines="none" detail="false">
-              <ion-icon slot="start" name="people-outline"></ion-icon>
-              <ion-label>Contactos</ion-label>
-            </ion-item>         
+            <ion-item  *ngIf="usuario.rolAgente" routerLink="/table-polizas" routerDirection="root" lines="none" detail="false">
+              <ion-icon slot="start" name="home-outline"></ion-icon>
+              <ion-label>Policies</ion-label>
+            </ion-item>
+            <ion-item *ngIf="usuario.rolAgente" routerLink="/table-comissions" routerDirection="root" lines="none" detail="false">
+              <ion-icon slot="start" name="calendar-outline"></ion-icon>
+              <ion-label>Comissions</ion-label>
+            </ion-item>
+            <ion-item *ngIf="usuario.rolAdmin" routerLink="/table-agentes" routerDirection="root" lines="none" detail="false">
+              <ion-icon slot="start" name="people-circle-outline"></ion-icon>
+              <ion-label>Agents</ion-label>
+            </ion-item> 
             <ion-item (click)="cerrarSesion()" routerDirection="root" lines="none" detail="false">
               <ion-icon slot="start" name="exit-outline"></ion-icon>
               <ion-label>Cerrar Sesión</ion-label>

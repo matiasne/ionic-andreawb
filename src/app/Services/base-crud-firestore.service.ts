@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseCrudFirestoreService {
 
-  protected collection: AngularFirestoreCollection;
+  private collection: AngularFirestoreCollection;
 
   public path:string ="";
   
@@ -99,14 +100,12 @@ export class BaseCrudFirestoreService {
 
     add(item) {
 
-      delete item.id;
-
-      
+      delete item.id;    
 
       console.log('[BaseService] adding item'+this.path);
   
       const promise = new Promise((resolve, reject) => {
-          this.collection.add(item).then(ref => {
+          this.collection.add({...item, createdAt: firebase.firestore.FieldValue.serverTimestamp()}).then(ref => {
               const newItem = {
                   id: ref.id,
                   /* workaround until spread works with generic types */
@@ -136,11 +135,11 @@ export class BaseCrudFirestoreService {
       return promise;
   }
   
-  delete(id: string): void {
+  delete(id: string) {
       console.log(`[BaseService] deleting item ${id}`);
   
       const docRef = this.collection.doc(id);
-      docRef.delete();
+      return docRef.delete();
   }
 }
 

@@ -144,9 +144,9 @@ export class AuthenticationFirebaseService {
   
 
 
-  signup(email,password) {
+  signup(data) {
     
-    return this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password)
+    return this.firebaseAuth.auth.createUserWithEmailAndPassword(data.email, data.password)
       .then((result) => {                   
         this.ngZone.run(async () => {          
           console.log(result.user);
@@ -155,7 +155,8 @@ export class AuthenticationFirebaseService {
           usuario.id = result.user.uid;
           usuario.foto = result.user.photoURL;
           usuario.email = result.user.email;
-          usuario.nombre = result.user.displayName;
+          usuario.nombre = data.firstName+" "+data.lastName;
+
           this.usuarioService.add(usuario);  
 
          this.toastService.mensaje("",'Usuario creador correctamente. Bienvenido!');

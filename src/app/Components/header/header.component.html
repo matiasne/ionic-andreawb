@@ -1,11 +1,20 @@
-<ion-toolbar >
+<ion-header>
+  <ion-toolbar >
 
-  <ion-title class="isologo" *ngIf="titulo != ''">
-    <h3>{{titulo}}</h3>
-  </ion-title>
- 
-  <ion-buttons  class="header-logo" slot="end" (click)="click()">
-    <ion-icon *ngIf="icono == 'close'" name="close-outline"></ion-icon>
-    <ion-icon *ngIf="icono == 'back'" name="arrow-back-outline"></ion-icon>
-  </ion-buttons> 
-</ion-toolbar>
+    <ion-buttons *ngIf="icono == 'menu'" slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-buttons  *ngIf="icono == 'back'" class="header-logo" slot="start" (click)="click()">
+      <ion-icon  name="arrow-back-outline"></ion-icon>
+    </ion-buttons> 
+
+    <ion-title *ngIf="titulo != ''">
+      <h3>{{titulo}}</h3>
+    </ion-title>
+  
+    <ion-buttons *ngIf="icono == 'close'" class="header-logo" slot="end" (click)="click()">
+      <ion-icon  name="close-outline"></ion-icon>
+    </ion-buttons> 
+  </ion-toolbar>
+</ion-header>

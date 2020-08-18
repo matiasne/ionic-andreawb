@@ -12,9 +12,13 @@ class File{
 
 export class Policy{
     public id ="";
+    public status = "";
+    public agentRef:any = "";
+    public agentName = "";
     public agentId = "";
     public number = ""; 
     public clientRef:any; //responsable
+    public clientName =""; //responsable
     public familyMembersRef = []; //familiares
     public receivedDate = "";
     public effectiveDate = "";

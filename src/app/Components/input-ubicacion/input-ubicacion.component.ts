@@ -25,6 +25,8 @@ export class InputUbicacionComponent implements OnInit {
 
   @ViewChild('map',{static: false}) mapElement: ElementRef;
 
+  @Input()readonly:boolean = false;
+
   public map: any;
   public geo:any;
 

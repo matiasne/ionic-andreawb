@@ -8,6 +8,8 @@ export class Usuario{
     public address:Localizacion;
     public phone = "";
     public email = "";
+    public rolAgente = false;
+    public rolAdmin = false;
 
 	constructor(){
     }

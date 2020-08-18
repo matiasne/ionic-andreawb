@@ -1,0 +1,72 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <app-header [titulo]="'Agents'" [icono]="'menu'"></app-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-row>
+    <ion-col>
+      <ion-searchbar animated 
+        [placeholder]="placeholder" 
+        showCancelButton="never" 
+        color="light" 
+        autocomplete="on"
+        enterkeyhint="send"
+        inputmode="text"
+        type="text"
+        debounce="500"
+        (ionChange)="onChange($event)">
+      </ion-searchbar>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  
+
+<ngx-datatable 
+  [rows]="rows" 
+  class="material" 
+  [limit]="8"
+  [loadingIndicator]="loadingIndicator"
+  [columnMode]="'force'" 
+  [headerHeight]="50" 
+  [footerHeight]="50" 
+  [rowHeight]="'auto'"
+  [columns]="columns" 
+  [reorderable]="reorderable">
+
+  <ngx-datatable-column  name="Name">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.displayName}}
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column  name="Email"> 
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <a href="mailto:{{row.email}}">{{row.email}}</a>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Admin" [sortable]="false"> 
+    <ng-template let-row="row" ngx-datatable-cell-template>      
+    
+        <ion-checkbox color="primary" checked slot="start" (ionChange)="toggleHabilitarAdmin(row,$event)" [(ngModel)]="row.rolAdmin"></ion-checkbox>
+              
+    </ng-template>    
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column name="Agent" [sortable]="false"> 
+    <ng-template let-row="row" ngx-datatable-cell-template>      
+      
+        <ion-checkbox color="primary" checked slot="start" (ionChange)="toggleHabilitarAgente(row,$event)" [(ngModel)]="row.rolAgente"></ion-checkbox>
+           
+    </ng-template>     
+  </ngx-datatable-column>
+
+
+</ngx-datatable>
+
+
+</ion-content>
+

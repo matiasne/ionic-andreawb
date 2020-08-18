@@ -1,20 +1,20 @@
 <ion-item>
   <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
   <ion-label position="floating">Address</ion-label>  
-  <ion-input id="pac-input" [(ngModel)]="localizacion.address.location"  type="text"  ></ion-input>  
+  <ion-input id="pac-input" autocomplete="off" [(ngModel)]="localizacion.address.location"  type="text"   [readonly]="readonly"></ion-input>  
 </ion-item> 
 <div class="ion-padding"> 
   <ion-row class="row">
     <ion-col class="col">  
       <div>
         <ion-label position="floating">Floor</ion-label>  
-        <ion-input name="piso" type="text" [(ngModel)]="localizacion.address.floor_number" (change)='onChange()'></ion-input>
+        <ion-input name="piso" type="text" [(ngModel)]="localizacion.address.floor_number" (change)='onChange()'  [readonly]="readonly"></ion-input>
       </div>
     </ion-col>
     <ion-col class="col">
       <div>
         <ion-label position="floating">Door</ion-label>  
-        <ion-input name="puerta" type="text" [(ngModel)]="localizacion.address.door_number" (change)='onChange()'></ion-input>
+        <ion-input name="puerta" type="text" [(ngModel)]="localizacion.address.door_number" (change)='onChange()'  [readonly]="readonly"></ion-input>
       </div>
     </ion-col>
   </ion-row>  

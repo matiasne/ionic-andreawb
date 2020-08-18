@@ -1,0 +1,62 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <app-header [titulo]="'Files'" [icono]="'close'" (click)='clickIcono($event)'></app-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="center" >
+    <ngx-file-drop dropZoneLabel="Drop files here"  (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" >
+          <div *ngIf="porcentaje == 0" style="cursor: pointer;" (click)="fileInput.click()">Haz click o arrastra un archivo aquí</div>
+          <input #fileInput  type="file" multiple="multiple" name="files[]" accept="image/*;" (change)="cambioArchivo($event)" style="display:none;" />
+          <progress *ngIf="porcentaje > 0 && porcentaje <= 100" class="progress is-large is-success" value="{{porcentaje}}" max="100">{{porcentaje}}%</progress>
+        </ng-template>
+    </ngx-file-drop>      
+  </div>
+  <ngx-datatable 
+  [rows]="rows" 
+  class="material" 
+  [limit]="8"
+  [loadingIndicator]="loadingIndicator"
+  [columnMode]="'force'" 
+  [headerHeight]="50" 
+  [footerHeight]="50" 
+  [rowHeight]="'auto'"
+  [columns]="columns" 
+  [reorderable]="reorderable">
+
+    <ngx-datatable-column  name="format" [canAutoResize]="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <span *ngIf="row.format.indexOf('application') > -1" style="font-size: 24px;">
+          <ion-icon  name="document-text-outline"></ion-icon>
+        </span>
+        <span *ngIf="row.format.indexOf('image') > -1" style="font-size: 24px;">
+         <img src="{{row.url}}" alt="">
+        </span>
+        <span *ngIf="row.format == ''" style="font-size: 24px;">
+          <img src="{{row.url}}" alt="">
+         </span>
+        
+      </ng-template>
+    </ngx-datatable-column> 
+
+    <ngx-datatable-column  name="Name" >
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <a href="{{row.url}}" target="_blank">
+          {{row.name}} <br>          
+        </a>
+        {{row.createdAt | date:'hh:mm aaa dd/MM/yyyy'}}
+      </ng-template>
+    </ngx-datatable-column>       
+    <ngx-datatable-column [sortable]="false" [canAutoResize]="false"> 
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <ion-button  color="danger" expand="block" (click)="delete(row)">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+        </ion-button>          
+      </ng-template>    
+    </ngx-datatable-column>
+  </ngx-datatable>
+    
+</ion-content>

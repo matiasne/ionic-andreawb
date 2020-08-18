@@ -11,6 +11,7 @@ import { NotificacionesService } from './Services/notificaciones.service';
 import { ToastService } from './Services/toast.service';
 import { UsuarioService } from './Services/usuario.service';
 import { User } from './models/user';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -75,7 +76,8 @@ export class AppComponent implements OnInit {
       
         if (state) {
                    
-        //  this.router.navigate(['/home']);     
+          //if(!environment.desarrollando)
+            this.router.navigate(['/table-polizas']);     
 
           if (this.platform.is('cordova')) {
             this.fcm.subscribeToTopic('general');

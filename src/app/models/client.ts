@@ -12,7 +12,7 @@ export class Client{
     public phone = "";
     public altphone = "";
     public email = "";
-    public status = "";
+ 
 
 	constructor(
 		

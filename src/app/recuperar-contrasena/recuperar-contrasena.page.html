@@ -1,9 +1,21 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>recuperar-contrasena</ion-title>
+    <app-header [titulo]="'Recuperar Contraseña'" [icono]="'back'"></app-header>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <form #form="ngForm" (ngSubmit)="recuperarContrasena()">
+    
+        
+      <ion-item class="input-item">
+          <ion-input name="email" type="email" placeholder="Mail" [(ngModel)]="email" required></ion-input>
+      </ion-item>
+          
+      <ion-button size="large" expand="block" (click)="recuperarContrasena()">
+          Recuperar Contraseña
+      </ion-button>
+           
+   
+</form>
 </ion-content>

@@ -57,6 +57,18 @@ const routes: Routes = [
     path: 'select-cliente',
     loadChildren: () => import('./select-cliente/select-cliente.module').then( m => m.SelectClientePageModule)
   },
+  {
+    path: 'archivos',
+    loadChildren: () => import('./archivos/archivos.module').then( m => m.ArchivosPageModule)
+  },
+  {
+    path: 'comentarios',
+    loadChildren: () => import('./comentarios/comentarios.module').then( m => m.ComentariosPageModule)
+  },
+  {
+    path: 'table-agentes',
+    loadChildren: () => import('./table-agentes/table-agentes.module').then( m => m.TableAgentesPageModule)
+  },
 
  
 ];

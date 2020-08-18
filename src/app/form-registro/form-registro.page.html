@@ -11,21 +11,21 @@
 
   <form [formGroup]="datosForm">
     <!--nombre-->
-    <ion-item [class.invalid]="submitted && !datosForm.controls.first_name.valid">
+    <ion-item [class.invalid]="submitted && !datosForm.controls.firstName.valid">
       <ion-label position="floating">Nombre</ion-label>     
-      <ion-input name="nombre" type="text" formControlName="first_name" 
+      <ion-input name="nombre" type="text" formControlName="firstName" 
                   required ></ion-input>
-      <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
-          <div *ngIf="f.first_name.errors.required"><h5>Ingresa un Nombre</h5></div>
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required"><h5>Ingresa un Nombre</h5></div>
       </div>
     </ion-item>
        
     <!--apellido-->
-    <ion-item [class.invalid]="submitted && !datosForm.controls.last_name.valid">
+    <ion-item [class.invalid]="submitted && !datosForm.controls.lastName.valid">
       <ion-label position="floating">Apellido</ion-label>
-      <ion-input name="apellido" type="text" formControlName="last_name" required ></ion-input>
-      <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
-          <div *ngIf="f.last_name.errors.required"><h5>Ingresa un Apellido</h5></div>
+      <ion-input name="apellido" type="text" formControlName="lastName" required ></ion-input>
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.required"><h5>Ingresa un Apellido</h5></div>
       </div>
     </ion-item>
 
@@ -50,15 +50,15 @@
       </button>
     </ion-item>    
     <!--repetir contraseña-->
-    <ion-item [class.invalid]="submitted && !datosForm.controls.password_confirmation.valid">
+    <ion-item [class.invalid]="submitted && !datosForm.controls.passwordConfirmation.valid">
       <ion-label position="floating">Confirmación de contraseña</ion-label>
-      <ion-input name="password_confirmation" [type]="passwordTypeInput2"  #passwordEyeConfirmation 
-            formControlName="password_confirmation" required clear-on-edit="true"></ion-input>
+      <ion-input name="passwordConfirmation" [type]="passwordTypeInput2"  #passwordEyeConfirmation 
+            formControlName="passwordConfirmation" required clear-on-edit="true"></ion-input>
       <button  item-end  class="btn_eye_icon"  (click)="togglePasswordConfirmMode()">
         <ion-icon  [name]="iconpassword2"></ion-icon>
       </button>   
-      <div *ngIf="submitted && f.password_confirmation.errors" class="invalid-feedback">
-          <div *ngIf="f.password_confirmation.errors.required"><h5>Ingresa una Contraseña</h5></div>
+      <div *ngIf="submitted && f.passwordConfirmation.errors" class="invalid-feedback">
+          <div *ngIf="f.passwordConfirmation.errors.required"><h5>Ingresa una Contraseña</h5></div>
       </div>  
     </ion-item>
     <p></p>

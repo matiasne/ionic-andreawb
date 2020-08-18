@@ -8,6 +8,8 @@ import { Client } from '../models/client';
 import { AuthenticationFirebaseService } from '../Services/authentication/authentication-firebase.service';
 import { UsuarioService } from '../Services/usuario.service';
 import { ParametrosService } from '../Services/global/parametros.service';
+import { Usuario } from '../models/usuario';
+
 
 
 @Component({
@@ -22,6 +24,9 @@ export class FormRegistroClientePage implements OnInit {
   datosForm: FormGroup;
   submitted = false;
   isEditing = false;
+  readonly = true;
+  titulo ="New Client";
+  usuario:Usuario;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +39,7 @@ export class FormRegistroClientePage implements OnInit {
   ) { 
     this.datosForm = this.formBuilder.group({
       id:['',null],
-      agentId:['', Validators.required],
+      agentId:['',null],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
@@ -42,17 +47,36 @@ export class FormRegistroClientePage implements OnInit {
       address: ['', Validators.required],
       phone: ['', Validators.required],
       altphone:['',null],
-      email: ['', Validators.required],
-      status: ['', Validators.required]
+      email: ['', Validators.required]
     });
     this.cliente = new Client();
+    
+    
 
-    if(this.parametrosService.param instanceof Client){
-      this.isEditing = true;
+    if(this.parametrosService.param.cliente instanceof Client){
+      this.isEditing = true;      
       console.log(this.parametrosService.param)
-      this.cliente = this.parametrosService.param;
-      this.datosForm.patchValue(this.parametrosService.param)
+      this.cliente = this.parametrosService.param.cliente;
+      this.datosForm.patchValue(this.parametrosService.param.cliente);
+      this.titulo = "Edit Client";
     }
+
+    this.readonly = this.parametrosService.param.readonly;
+    
+    if(this.usuarioService.isAdmin()){
+      this.readonly = false;
+    }
+    if(this.usuarioService.isAgent()){
+      let id = this.usuarioService.getUID();
+      if(id == this.cliente.agentId){
+        this.readonly = false;
+      }
+    }
+
+    if(this.readonly){
+      this.titulo = this.cliente.firstName+" "+this.cliente.lastName;
+    }
+
   }
 
   ngOnInit() {

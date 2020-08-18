@@ -6,7 +6,7 @@ export class User{
     public nombre = "";
     public token = "";
     public address = "";
-
+    public rol="";
 	constructor(
 		
 		){

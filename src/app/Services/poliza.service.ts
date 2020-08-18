@@ -18,4 +18,6 @@ export class PolizaService extends BaseCrudFirestoreService{
     super(afs);
     this.setPath("polizas");
   }
+
+  
 }

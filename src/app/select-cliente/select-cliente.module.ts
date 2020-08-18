@@ -8,10 +8,12 @@ import { SelectClientePageRoutingModule } from './select-cliente-routing.module'
 
 import { SelectClientePage } from './select-cliente.page';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ComponentsModule } from '../Components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     FormsModule,
     NgxDatatableModule,
     IonicModule,

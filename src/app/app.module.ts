@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpClientModule } from '@angular/common/http';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -38,7 +39,7 @@ import { SeleccionarImagenComponent } from './Components/seleccionar-imagen/sele
 import { ComponentsModule } from './Components/components.module';
 import { ItemDirective } from './Components/list-base/item.directive';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAPayDz557b1y2D_dp5aM32SxA0b1rcK2o",
@@ -67,7 +68,8 @@ const firebaseConfig = {
     ReactiveFormsModule,
     BrowserModule,
     NgxQRCodeModule,
-    NgxDatatableModule,   
+    NgxDatatableModule,  
+    NgxFileDropModule, 
     HttpClientModule,
     ImageCropperModule,
     IonicModule.forRoot(),
@@ -75,6 +77,7 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireMessagingModule,
     ServiceWorkerModule.register('combined-sw.js', { enabled: environment.production })  

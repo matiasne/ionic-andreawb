@@ -1,10 +1,10 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>table-clientes</ion-title>
+    <app-header [titulo]="'Policies'" [icono]="'menu'"></app-header>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
   <ion-row>
     <ion-col>
@@ -20,7 +20,14 @@
         (ionChange)="onChange($event)">
       </ion-searchbar>
     </ion-col>
-    <ion-col></ion-col>
+    <ion-col>
+      <ion-select placeholder="Status" (ionChange)="changeStatus($event)" name="status">
+        <ion-select-option value="Active">Active</ion-select-option>
+        <ion-select-option value="Inactive">Inactive</ion-select-option>
+        <ion-select-option value="Pending">Pending</ion-select-option>
+        <ion-select-option value="All">All</ion-select-option>
+      </ion-select>
+    </ion-col>
   </ion-row>
   
 
@@ -35,36 +42,38 @@ class="material"
 [rowHeight]="'auto'"
 [columns]="columns" 
 [reorderable]="reorderable">
+  <ngx-datatable-column  name="Agent Name"> </ngx-datatable-column>
+  <ngx-datatable-column  name="Policy Number">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.number}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column  name="Client Name">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <div (click)="viewClient(row)">
+        {{row.clientName}}
+      </div>     
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column  name="# Members"> 
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.numberOfMembres}}
+    </ng-template>
+  </ngx-datatable-column>
 
-  <ngx-datatable-column  name="First Name"> </ngx-datatable-column>
-  <ngx-datatable-column  name="Last Name"> </ngx-datatable-column>
-  <ngx-datatable-column  name="Phone"> 
+  <ngx-datatable-column  name="Responsability">
     <ng-template let-row="row" ngx-datatable-cell-template>
-      <a href="https://wa.me/{{row.phone}}">{{row.phone}}</a>
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column  name="Email"> 
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      <a href="mailto:{{row.email}}">{{row.email}}</a>
+      {{row.responsability | currency}}
     </ng-template>
   </ngx-datatable-column>
 
-  <ngx-datatable-column name="Status" [resizeable]="false">
-    <ng-template ngx-datatable-header-template>
-      Status
-    </ng-template>
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      <ion-select placeholder="Select one" (ionChange)="changeStatus(row,$event)" value="{{row.status}}" name="status">
-        <ion-select-option value="Active">Active</ion-select-option>
-        <ion-select-option value="Inactive">Inactive</ion-select-option>
-        <ion-select-option value="Pending">Pending</ion-select-option>
-      </ion-select>
-    </ng-template>
+  <ngx-datatable-column  name="Status" [sortable]="false">
   </ngx-datatable-column>
-  <ngx-datatable-column> 
+  <ngx-datatable-column [sortable]="false"> 
     <ng-template let-row="row" ngx-datatable-cell-template>
       <ion-button (click)="editar(row)" expand="block">
-        <ion-icon slot="start" name="create-outline"></ion-icon>
+        <ion-icon name="open-outline"></ion-icon>
       </ion-button>          
     </ng-template>    
   </ngx-datatable-column>

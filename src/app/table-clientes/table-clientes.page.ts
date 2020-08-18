@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { FormRegistroClientePage } from '../form-registro-cliente/form-registro-cliente.page';
 import { ParametrosService } from '../Services/global/parametros.service';
 import { Client } from '../models/client';
+import { UsuarioService } from '../Services/usuario.service';
 
 @Component({
   selector: 'app-table-clientes',
@@ -21,7 +22,8 @@ export class TableClientesPage implements OnInit {
     private baseFireStore:BaseCrudFirestoreService,
     private emailComposer: EmailComposer,
     private modalController:ModalController,
-    private parametrosService:ParametrosService
+    private parametrosService:ParametrosService,
+    private usuarioService:UsuarioService
   ) {
     this.baseFireStore.setPath("clientes");
    }
@@ -35,6 +37,8 @@ export class TableClientesPage implements OnInit {
     })
 
   }
+
+  
   
 
   onChange(event){
@@ -61,11 +65,19 @@ export class TableClientesPage implements OnInit {
             encontrado = true;
         }
 
-        if(item.LastName){
-          retorno =  (item.LastName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
+        if(item.lastName){
+          retorno =  (item.lastName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
           if(retorno)
             encontrado = true;
-        }         
+        }   
+        
+        if(item.email){
+          retorno =  (item.email.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
+          if(retorno)
+            encontrado = true;
+        } 
+
+        
        
         if(encontrado){
           this.rows.push(item);
@@ -80,24 +92,22 @@ export class TableClientesPage implements OnInit {
   }
 
 
-  changeStatus(row,event){
-    console.log(row)
-    console.log(event.target.value);
-    row.status = event.target.value;
-    this.baseFireStore.update(row).then(data=>{
-      console.log(data);
-    })
-  }
+  
 
   sendEmail(mail){
     let mailText = "mailto:"+mail; // add the links to body
     window.location.href = mailText;
   }
 
-  async editar(client){
+  async abrir(client){
     let cliente = new Client();
     cliente.asignarValores(client);
-    this.parametrosService.param = cliente;
+
+    
+
+    this.parametrosService.param= {
+      cliente:cliente
+    };
     const modal = await this.modalController.create({
       component: FormRegistroClientePage
     });
@@ -105,6 +115,7 @@ export class TableClientesPage implements OnInit {
   }
 
   async agregar(){
+    this.parametrosService.param= {cliente:""};
     const modal = await this.modalController.create({
       component: FormRegistroClientePage
     });

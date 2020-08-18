@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <app-header [titulo]="'Client Registration'" [icono]="'close'" (click)='clickIcono($event)'></app-header>
+    <app-header [titulo]="titulo" [icono]="'close'" (click)='clickIcono($event)'></app-header>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
         <ion-item [class.invalid]="submitted && !datosForm.controls.firstName.valid" >
           <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
           <ion-label position="floating">First Name</ion-label>     
-          <ion-input name="firstName" type="text" formControlName="firstName" required ></ion-input>
+          <ion-input name="firstName" type="text" formControlName="firstName" required  [readonly]="readonly"></ion-input>
           <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
             <div *ngIf="f.firstName.errors.required">
               <h5>Enter a first name</h5>
@@ -25,7 +25,7 @@
         <ion-item [class.invalid]="submitted && !datosForm.controls.lastName.valid" >
           <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
           <ion-label position="floating">Last Name</ion-label>     
-          <ion-input name="lastName" type="text" formControlName="lastName" required ></ion-input>
+          <ion-input name="lastName" type="text" formControlName="lastName" required [readonly]="readonly"></ion-input>
           <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
             <div *ngIf="f.lastName.errors.required">
               <h5>Enter a last name</h5>
@@ -42,7 +42,7 @@
     <ion-item [class.invalid]="submitted && !datosForm.controls.gender.valid" >
       <ion-icon name="male-female" slot="start" color="primary"></ion-icon>
       <ion-label position="floating" >Gender</ion-label>
-      <ion-select placeholder="Select one" formControlName="gender" name="gender" required>
+      <ion-select placeholder="Select one" formControlName="gender" name="gender" required [disabled]="readonly">
         <ion-select-option value="Female">Female</ion-select-option>
         <ion-select-option value="Male">Male</ion-select-option>
         <ion-select-option value="Unspecified">Unspecified</ion-select-option>
@@ -59,7 +59,7 @@
       <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
       <ion-label position="floating">Date of birth</ion-label>
       <ion-datetime displayFormat="MM/DD/YYYY" min="1900-01-01" max="2100-12-31" 
-                    formControlName="dateOfBirth" name="dateOfBirth" required></ion-datetime>
+                    formControlName="dateOfBirth" name="dateOfBirth" required [readonly]="readonly"></ion-datetime>
       <div *ngIf="submitted && f.dateOfBirth.errors" class="invalid-feedback">
         <div *ngIf="f.dateOfBirth.errors.required">
           <h5>Select a date of birth</h5>
@@ -71,7 +71,7 @@
     <ion-item [class.invalid]="submitted && !datosForm.controls.phone.valid">
       <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
       <ion-label position="floating">Phone</ion-label>
-      <ion-input name="phone" type="number" formControlName="phone" required ></ion-input>
+      <ion-input name="phone" type="number" formControlName="phone" required [readonly]="readonly"></ion-input>
       <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
         <div *ngIf="f.phone.errors.required">
           <h5>Enter a phone number</h5>
@@ -83,14 +83,14 @@
     <ion-item >
       <ion-icon name="phone-portrait-outline" slot="start" color="primary"></ion-icon>
       <ion-label position="floating">Alternative Phone</ion-label>
-      <ion-input name="altphone" type="number" formControlName="altphone" required ></ion-input>
+      <ion-input name="altphone" type="number" formControlName="altphone" required [readonly]="readonly"></ion-input>
     </ion-item> 
 
     <!--email-->
     <ion-item [class.invalid]="submitted && !datosForm.controls.email.valid">
       <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
       <ion-label position="floating">E-mail</ion-label>
-      <ion-input name="email" type="text" formControlName="email" required ></ion-input>
+      <ion-input name="email" type="text" formControlName="email" required [readonly]="readonly"></ion-input>
       <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
         <div *ngIf="f.email.errors.required">
           <h5>Enter an email</h5>
@@ -98,25 +98,12 @@
       </div>
     </ion-item> 
     
-    <!--estado-->
-    <ion-item [class.invalid]="submitted && !datosForm.controls.status.valid">
-      <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
-      <ion-label position="floating">Status</ion-label>
-      <ion-select placeholder="Select one" formControlName="status" name="status" required>
-        <ion-select-option value="Active">Active</ion-select-option>
-        <ion-select-option value="Inactive">Inactive</ion-select-option>
-        <ion-select-option value="Pending">Pending</ion-select-option>
-      </ion-select>
-      <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
-        <div *ngIf="f.status.errors.required">
-          <h5>Select a status</h5>
-        </div>
-      </div>
-    </ion-item>
+    
 
     <!--ubicacion-->
     <div [class.invalid]="submitted && !datosForm.controls.address.valid">
       <app-input-ubicacion     
+        [readonly]="readonly"
         [address] = "cliente.address"
         [country]="cliente.address.country"
         [street_number]="cliente.address.street_number"
@@ -144,5 +131,5 @@
   </form>
 </ion-content>
 <ion-footer>
-  <ion-button (click)="registrar()" expand="block">Submit</ion-button>    
+  <ion-button *ngIf="!readonly" (click)="registrar()" expand="block">Submit</ion-button>    
 </ion-footer>

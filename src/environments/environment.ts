@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  desarrollando:true,
   url:'https://testing.api.keysapp.com.ar/v1/',
   production: false,
   serverKey: 'AAAAxyLigj8:APA91bFU8sovIsO9_i-tYZuRHsO6T7KQ-YW_pp52pLbWg2ovR2xTGswh4KeAg6jtBI-e_K4B-IRjvNYbY2aJtLhN06egiT6Zk8Iqm05QCz2zgjf78etmf005Baj_XA0IjHh8ZWGhVLsv',

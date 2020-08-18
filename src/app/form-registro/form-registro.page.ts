@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthenticationRafflesService } from '../Services/authentication/authentication-raffles.service';
+import { AuthenticationFirebaseService } from '../Services/authentication/authentication-firebase.service';
 
 @Component({
   selector: 'app-form-registro',
@@ -30,15 +31,16 @@ export class FormRegistroPage implements OnInit {
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController,
     private router: Router,
-    private authServiceRaffless:AuthenticationRafflesService
+    private authServiceRaffless:AuthenticationRafflesService,
+    private authFirestoreService:AuthenticationFirebaseService
   ) { 
 
     this.datosForm = this.formBuilder.group({
-      first_name: ['', Validators.required],
-      last_name : ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName : ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],      
-      password_confirmation:['', Validators.required],
+      passwordConfirmation:['', Validators.required],
       accepted: [false, Validators.required]    
     });
     
@@ -55,14 +57,14 @@ export class FormRegistroPage implements OnInit {
     if(this.f.password.value == ''){
       this.presentToast("Debe ingresar una contraseña");
     }
-    if(this.f.password.value != this.f.password_confirmation.value){
+    if(this.f.password.value != this.f.passwordConfirmation.value){
       this.presentToast("La contraseña y su confirmación no coinciden");
     }
     if(this.f.accepted.value != true){
       this.presentToast("Debe leer y aceptar los términos y condiciones");
     }   
     
-    this.authServiceRaffless.registrar(this.datosForm.value);
+    this.authFirestoreService.signup(this.datosForm.value);
   }
 
   async presentToast(mensaje: string) {
