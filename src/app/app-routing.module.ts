@@ -69,6 +69,14 @@ const routes: Routes = [
     path: 'table-agentes',
     loadChildren: () => import('./table-agentes/table-agentes.module').then( m => m.TableAgentesPageModule)
   },
+  {
+    path: 'table-companias',
+    loadChildren: () => import('./table-companias/table-companias.module').then( m => m.TableCompaniasPageModule)
+  },
+  {
+    path: 'form-registro-companias',
+    loadChildren: () => import('./form-registro-companias/form-registro-companias.module').then( m => m.FormRegistroCompaniasPageModule)
+  },
 
  
 ];

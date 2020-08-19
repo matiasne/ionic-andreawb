@@ -83,7 +83,7 @@ export class ArchivosPage implements OnInit {
     if(this.palabraFiltro != ""){
 
       var palabra = this.palabraFiltro.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-     var retorno = false;
+      var retorno = false;
 
       this.rows = [];
       

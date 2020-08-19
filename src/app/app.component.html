@@ -21,6 +21,10 @@
               <ion-icon slot="start" name="calendar-outline"></ion-icon>
               <ion-label>Comissions</ion-label>
             </ion-item>
+            <ion-item *ngIf="usuario.rolAgente" routerLink="/table-companias" routerDirection="root" lines="none" detail="false">
+              <ion-icon slot="start" name="business-outline"></ion-icon>
+              <ion-label>Companies</ion-label>
+            </ion-item>
             <ion-item *ngIf="usuario.rolAdmin" routerLink="/table-agentes" routerDirection="root" lines="none" detail="false">
               <ion-icon slot="start" name="people-circle-outline"></ion-icon>
               <ion-label>Agents</ion-label>
