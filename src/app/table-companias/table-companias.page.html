@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <app-header [titulo]="'Clients'" [icono]="'menu'"></app-header>
+    <app-header [titulo]="'Companies'" [icono]="'menu'"></app-header>
   </ion-toolbar>
 </ion-header>
 
@@ -20,17 +20,6 @@
         (ionChange)="onChange($event)">
       </ion-searchbar>
     </ion-col>
-    <!--<ion-col size="3"></ion-col>
-    <ion-col size="3">
-      <ion-button  type="submit" color="primary" (click)="importarCvs()">
-        <ion-icon name="enter"></ion-icon>&nbsp;
-        Import
-      </ion-button>
-      <ion-button  type="submit" color="primary" (click)="exportarCvs()">
-        <ion-icon name="exit"></ion-icon>&nbsp;
-        Export
-      </ion-button>
-    </ion-col>-->
   </ion-row>
   
 
@@ -48,11 +37,10 @@ class="material"
 
   <ngx-datatable-column  name="Name"> 
     <ng-template let-row="row" ngx-datatable-cell-template>
-      {{row.firstName}} {{row.lastName}}
+      {{row.name}}
     </ng-template>
   </ngx-datatable-column>
-  
-  <ngx-datatable-column  name="Phone"> 
+  <!--<ngx-datatable-column  name="Phone"> 
     <ng-template let-row="row" ngx-datatable-cell-template>
       <a href="https://wa.me/{{row.phone}}">{{row.phone}}</a>
     </ng-template>
@@ -61,13 +49,19 @@ class="material"
     <ng-template let-row="row" ngx-datatable-cell-template>
       <a href="mailto:{{row.email}}">{{row.email}}</a>
     </ng-template>
+  </ngx-datatable-column>-->
+  <ngx-datatable-column  name="Plans"> 
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <ion-label *ngFor="let plan of row.plans; let i=index">
+        <ion-icon name="checkmark-outline" color="primary"></ion-icon>
+        {{plan}} &nbsp; </ion-label>
+    </ng-template>
   </ngx-datatable-column>
 
-  
   <ngx-datatable-column  name="Edit" [sortable]="false"> 
     <ng-template let-row="row" ngx-datatable-cell-template>
-      <ion-button (click)="abrir(row)" expand="block">
-        <ion-icon slot="start" name="create-outline"></ion-icon>
+      <ion-button (click)="abrir(row)" >
+        <ion-icon name="create-outline"></ion-icon>
       </ion-button>          
     </ng-template>    
   </ngx-datatable-column>
