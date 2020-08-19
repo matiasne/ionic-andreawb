@@ -17,6 +17,8 @@ export class Policy{
     public agentName = "";
     public agentId = "";
     public number = ""; 
+    public company="";
+    public plan="";
     public clientRef:any; //responsable
     public clientName =""; //responsable
     public familyMembersRef = []; //familiares

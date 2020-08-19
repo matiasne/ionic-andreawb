@@ -28,11 +28,12 @@
     <ion-col class="section-border">
      
 
-
-        <!--Número-->
+      <ion-row>
+        <ion-col>
+          <!--Número-->
         <ion-item [class.invalid]="submitted && !datosForm.controls.number.valid" >
-          <ion-icon name="checkmark-outline" slot="start" color="primary"></ion-icon>
-          <ion-label position="floating">Number</ion-label>     
+          <ion-icon name="keypad-outline" slot="start" color="primary"></ion-icon>
+          <ion-label position="floating">Police Number</ion-label>     
           <ion-input name="number" type="text" formControlName="number" required [readonly]="readonly"></ion-input>
           <div *ngIf="submitted && f.number.errors" class="invalid-feedback">
             <div *ngIf="f.number.errors.required">
@@ -40,6 +41,35 @@
             </div>
           </div>
         </ion-item>
+        </ion-col>
+        <ion-col>
+          <!--Número-->
+        <ion-item [class.invalid]="submitted && !datosForm.controls.company.valid" >
+          <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
+          <ion-label position="floating">Company</ion-label>     
+          <ion-input name="number" type="text" formControlName="company" required [readonly]="readonly"></ion-input>
+          <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+            <div *ngIf="f.company.errors.required">
+              <h5>Enter a company</h5>
+            </div>
+          </div>
+        </ion-item>
+        </ion-col>
+        <ion-col>
+          <!--Número-->
+        <ion-item [class.invalid]="submitted && !datosForm.controls.plan.valid" >
+          <ion-icon name="shield-outline" slot="start" color="primary"></ion-icon>
+          <ion-label position="floating">Plan</ion-label>     
+          <ion-input name="number" type="text" formControlName="plan" required [readonly]="readonly"></ion-input>
+          <div *ngIf="submitted && f.plan.errors" class="invalid-feedback">
+            <div *ngIf="f.plan.errors.required">
+              <h5>Select a plan</h5>
+            </div>
+          </div>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+        
     
         
 
@@ -123,7 +153,7 @@
             <!--responsabilidad-->
             <ion-item [class.invalid]="submitted && !datosForm.controls.responsability.valid" >
               <ion-icon name="newspaper-outline" slot="start" color="primary"></ion-icon>
-              <ion-label position="floating">Responsability</ion-label>     
+              <ion-label position="floating">Member Responsibility</ion-label>     
               <ion-input name="responsability" type="number" formControlName="responsability" required [readonly]="readonly"></ion-input>
               <ion-icon name="cash-outline" slot="end" style="margin-top: 25px;"></ion-icon>
               <div *ngIf="submitted && f.responsability.errors" class="invalid-feedback">
