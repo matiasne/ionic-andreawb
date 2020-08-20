@@ -1,0 +1,18 @@
+<ion-row>
+  <ngx-file-drop (onFileDrop)="dropped($event)" 
+                  dropZoneClassName="my_drop_zone" 
+                  contentClassName="my_content_class"
+                  browseBtnLabel="Import"
+                  multiple="false">
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+      <ion-button type="button" (click)="openFileSelector()">
+        <ion-icon name="enter-outline" slot="start"></ion-icon>
+        <ion-label>Import</ion-label>
+      </ion-button>
+    </ng-template>
+  </ngx-file-drop>
+  <ion-button (click)="exportar()">
+    <ion-icon name="exit-outline" slot="start"></ion-icon>
+    <ion-label>Export</ion-label>
+  </ion-button> 
+</ion-row>

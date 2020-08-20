@@ -14,9 +14,9 @@ import { ArchivosPage } from '../archivos/archivos.page';
   styleUrls: ['./table-clientes.page.scss'],
 })
 export class TableClientesPage implements OnInit {
-
-  public Allrows = [];
-  public rows =[];
+  public nombreArchivo: string = 'clientes-andreawb';
+  public allRows = [];
+  public rows = [];
   public palabraFiltro = "";
 
   constructor(
@@ -25,75 +25,55 @@ export class TableClientesPage implements OnInit {
     private modalController:ModalController,
     private parametrosService:ParametrosService,
     private usuarioService:UsuarioService
-  ) {
+    ) {
     this.baseFireStore.setPath("clientes");
    }
 
   ngOnInit() {
-
     this.baseFireStore.list().subscribe(snapshot =>{
-      this.Allrows = snapshot;
-      console.log(this.rows)
+      this.allRows = snapshot;
+      //console.log(this.rows)
       this.buscar();
-    })
-
+    });
   }
-
-  
-  
 
   onChange(event){
     this.palabraFiltro = event.target.value;
     this.buscar();
   }
 
-
   buscar(){ 
-
     if(this.palabraFiltro != ""){
-
       var palabra = this.palabraFiltro.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-     var retorno = false;
-
+      var retorno = false;
       this.rows = [];
-      
-      this.Allrows.forEach(item => {      
-  
+      this.allRows.forEach(item => {      
         var encontrado = false;
         if(item.firstName){
           retorno =  (item.firstName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
           if(retorno)
             encontrado = true;
         }
-
         if(item.lastName){
           retorno =  (item.lastName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
           if(retorno)
             encontrado = true;
         }   
-        
         if(item.email){
           retorno =  (item.email.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").indexOf(palabra.toLowerCase()) > -1);
           if(retorno)
             encontrado = true;
         } 
-
-        
-       
         if(encontrado){
           this.rows.push(item);
           return true;
         }
-
       });   
     }
     else{
-      this.rows = this.Allrows;
+      this.rows = this.allRows;
     }
   }
-
-
-  
 
   sendEmail(mail){
     let mailText = "mailto:"+mail; // add the links to body
@@ -103,9 +83,6 @@ export class TableClientesPage implements OnInit {
   async abrir(client){
     let cliente = new Client();
     cliente.asignarValores(client);
-
-    
-
     this.parametrosService.param= {
       cliente:cliente
     };
@@ -123,17 +100,10 @@ export class TableClientesPage implements OnInit {
     modal.present();
   }
 
-  /*async importarCvs(){
-    let modal = await this.modalController.create({
-      component: ArchivosPage,
-      componentProps: {id:'1'}
-    }); 
-    modal.present();
+  importar(objects: any[]){
+    this.allRows = objects;
+    //console.log('importados', this.allRows);
   }
-
-  async exportarCsv(){
-
-  }*/
 
 
 }

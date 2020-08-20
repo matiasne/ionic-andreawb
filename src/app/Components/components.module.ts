@@ -10,6 +10,8 @@ import { ItemDirective } from './list-base/item.directive';
 import { ListBaseComponent } from './list-base/list-base.component';
 import { TableComponent } from './table/table.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { IoCsvComponent } from './io-csv/io-csv.component';
 
 @NgModule({
 imports: [
@@ -19,6 +21,7 @@ imports: [
     NgxDatatableModule,
     IonicModule,
     ImageCropperModule,
+    NgxFileDropModule,
     ],
   declarations: [
     SeleccionarImagenComponent,
@@ -26,7 +29,8 @@ imports: [
     ListBaseComponent,
     TableComponent,
     ItemDirective,
-    InputUbicacionComponent
+    InputUbicacionComponent,
+    IoCsvComponent
   ],
   exports: [
     SeleccionarImagenComponent,
@@ -34,7 +38,8 @@ imports: [
     ListBaseComponent,
     TableComponent,
     ItemDirective,
-    InputUbicacionComponent
+    InputUbicacionComponent,
+    IoCsvComponent
   ]
 })
 export class ComponentsModule {}
