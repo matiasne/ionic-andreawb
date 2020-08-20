@@ -61,7 +61,8 @@ export class FormRegistroClientePage implements OnInit {
       this.titulo = "Edit Client";
     }
 
-    this.readonly = this.parametrosService.param.readonly;
+    
+    
     
     if(this.usuarioService.isAdmin()){
       this.readonly = false;
@@ -72,10 +73,14 @@ export class FormRegistroClientePage implements OnInit {
         this.readonly = false;
       }
     }
+    
+    
 
     if(this.readonly){
       this.titulo = this.cliente.firstName+" "+this.cliente.lastName;
     }
+
+    console.log(this.readonly)
 
   }
 

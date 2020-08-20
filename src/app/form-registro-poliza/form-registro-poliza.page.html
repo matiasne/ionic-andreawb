@@ -47,7 +47,9 @@
         <ion-item [class.invalid]="submitted && !datosForm.controls.company.valid" >
           <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
           <ion-label position="floating">Company</ion-label>     
-          <ion-input name="number" type="text" formControlName="company" required [readonly]="readonly"></ion-input>
+          <ion-select placeholder="Select one" formControlName="company" (ionChange)="changeCompany($event)" name="autoplay" [disabled]="readonly">
+            <ion-select-option *ngFor="let compania of companias" [value]="compania.name">{{compania.name}}</ion-select-option>
+          </ion-select>
           <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
             <div *ngIf="f.company.errors.required">
               <h5>Enter a company</h5>
@@ -60,7 +62,11 @@
         <ion-item [class.invalid]="submitted && !datosForm.controls.plan.valid" >
           <ion-icon name="shield-outline" slot="start" color="primary"></ion-icon>
           <ion-label position="floating">Plan</ion-label>     
-          <ion-input name="number" type="text" formControlName="plan" required [readonly]="readonly"></ion-input>
+          
+          <ion-select placeholder="Select one" formControlName="plan" name="autoplay"  [disabled]="readonly">
+            <ion-select-option *ngFor="let plan of planes" [value]="plan">{{plan}}</ion-select-option>
+          </ion-select>
+        
           <div *ngIf="submitted && f.plan.errors" class="invalid-feedback">
             <div *ngIf="f.plan.errors.required">
               <h5>Select a plan</h5>
@@ -136,15 +142,17 @@
         </ion-row>
     
         <ion-row>
+          
           <ion-col>
-            <!--estado-->
-            <ion-item [class.invalid]="submitted && !datosForm.controls.state.valid" >
-              <ion-icon name="map-outline" slot="start" color="primary"></ion-icon>
-              <ion-label position="floating">State</ion-label>     
-              <ion-input name="state" type="text" formControlName="state" required [readonly]="readonly"></ion-input>
-              <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
-                <div *ngIf="f.state.errors.required">
-                  <h5>Enter a state</h5>
+            <!--responsabilidad-->
+            <ion-item [class.invalid]="submitted && !datosForm.controls.montlyPremium.valid" >
+              <ion-icon name="newspaper-outline" slot="start" color="primary"></ion-icon>
+              <ion-label position="floating">Montly Premium</ion-label>     
+              <ion-input name="montlyPremium" type="number" formControlName="montlyPremium" required [readonly]="readonly"></ion-input>
+              <ion-icon name="cash-outline" slot="end" style="margin-top: 25px;"></ion-icon>
+              <div *ngIf="submitted && f.montlyPremium.errors" class="invalid-feedback">
+                <div *ngIf="f.montlyPremium.errors.required">
+                  <h5>Enter a Montly Premium</h5>
                 </div>
               </div>
             </ion-item>
@@ -166,6 +174,19 @@
         </ion-row>
         
         <ion-row>
+          <ion-col>
+            <!--estado-->
+            <ion-item [class.invalid]="submitted && !datosForm.controls.state.valid" >
+              <ion-icon name="map-outline" slot="start" color="primary"></ion-icon>
+              <ion-label position="floating">State</ion-label>     
+              <ion-input name="state" type="text" formControlName="state" required [readonly]="readonly"></ion-input>
+              <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                <div *ngIf="f.state.errors.required">
+                  <h5>Enter a state</h5>
+                </div>
+              </div>
+            </ion-item>
+          </ion-col>
           <ion-col>
             <!--autoplay-->
             <ion-item [class.invalid]="submitted && !datosForm.controls.autoplay.valid" >

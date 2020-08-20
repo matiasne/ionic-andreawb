@@ -12,6 +12,10 @@ export class Client{
     public phone = "";
     public altphone = "";
     public email = "";
+    
+    public usCitizen ="";
+    public document ="";
+    public maritalStatus = "";
  
 
 	constructor(

@@ -130,6 +130,11 @@
   
   </form>
 </ion-content>
-<ion-footer>
-  <ion-button *ngIf="!readonly" (click)="registrar()" expand="block">Submit</ion-button>    
+<ion-footer class="ion-padding">
+  <ion-toolbar> 
+    <ion-button *ngIf="!readonly" slot="end" color="success" (click)="registrar()">
+      <ion-icon name="save-outline"></ion-icon>&nbsp;
+      Save
+    </ion-button>  
+</ion-toolbar>
 </ion-footer>

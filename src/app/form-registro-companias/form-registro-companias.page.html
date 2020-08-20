@@ -9,7 +9,7 @@
   <form [formGroup]="datosForm">
     <!--nombre-->
     <ion-row>
-      <ion-col size="6">
+      <ion-col>
         <ion-item [class.invalid]="submitted && !datosForm.controls.name.valid" >
           <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
           <ion-label position="floating">Name</ion-label>     
@@ -21,21 +21,13 @@
           </div>
         </ion-item>
       </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-icon name="newspaper-outline" slot="start" color="primary"></ion-icon>
-          <ion-label position="floating">Plans</ion-label>     
-          <ion-input name="plan" type="text" [(ngModel)]="plan" [ngModelOptions]="{standalone: true}"
-          [readonly]="readonly"></ion-input>
-          <ion-button *ngIf="!readonly" slot="end" color="primary" (click)="agregarPlan()">+</ion-button>
-        </ion-item>
-      </ion-col >
     </ion-row>
     <ion-row>
       <ion-col class="section-border">
         <ion-item>
           <ion-icon name="albums-outline" slot="start" color="primary"></ion-icon>
-          <h3>List of associated plans</h3>    
+          <h3>Plans</h3> 
+          <ion-button *ngIf="!readonly" slot="end" color="primary" (click)="agregarPlan()">+</ion-button>   
         </ion-item>
     
         <ion-item *ngFor="let plan of planes; let i=index;">
@@ -43,10 +35,6 @@
           <ion-icon *ngIf="!readonly" color="danger" name="trash-outline" slot="end" color="danger"  (click)="eliminarPlan(i)"></ion-icon>
         </ion-item>
       </ion-col>
-      
-        <!--<ion-button type="button" color="primary" (click)="agregarPlan()">
-          <ion-icon name="checkmark-circle-outline"  color="light"></ion-icon>
-        </ion-button>-->
     </ion-row>
     
     <!--<ion-list *ngIf="compania.plans.length>0">
@@ -88,5 +76,8 @@
   </form>
 </ion-content>
 <ion-footer>
-  <ion-button *ngIf="!readonly" (click)="registrar()" expand="block">Submit</ion-button>    
+  <ion-button color="success" *ngIf="!readonly" (click)="registrar()" expand="block">
+    <ion-icon name="save-outline"></ion-icon>&nbsp;
+    Save
+  </ion-button>    
 </ion-footer>

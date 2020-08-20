@@ -64,7 +64,11 @@ export class AppComponent implements OnInit {
       console.log("ERROR");
     });
 
-    this.platform.ready().then(() => {     
+    this.platform.ready().then(() => {   
+      
+      this.usuarioService.getActualUserObservable().subscribe(data=>{
+        this.usuario = data;
+      })
 
       this.usuarioService.checkToken();
 

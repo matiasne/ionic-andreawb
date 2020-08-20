@@ -16,6 +16,7 @@ import { ArchivosPageModule } from '../archivos/archivos.module';
 import { ComentariosPageModule } from '../comentarios/comentarios.module';
 import { ArchivosPage } from '../archivos/archivos.page';
 import { ComentariosPage } from '../comentarios/comentarios.page';
+import { CompaniaService } from '../Services/compania.service';
 
 @Component({
   selector: 'app-form-registro-poliza',
@@ -30,10 +31,13 @@ export class FormRegistroPolizaPage implements OnInit {
   datosForm: FormGroup;
   submitted = false;
   familyMembers:any[] = [];
+  companias = [];
+  planes =[];
   client:Client;
   readonly = true;
   isEditing = false;
   titulo = "New Policy";
+  isSaved = true;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -45,7 +49,8 @@ export class FormRegistroPolizaPage implements OnInit {
     private usuarioService:UsuarioService,
     private navCtrl:NavController,
     private loadingService:LoadingService,
-    private alertController:AlertController
+    private alertController:AlertController,
+    private companiaService:CompaniaService
   ) { 
     this.datosForm = this.formBuilder.group({
       id: [''],
@@ -60,15 +65,32 @@ export class FormRegistroPolizaPage implements OnInit {
       policyTermDate: [new Date, Validators.required],
       paidThroughDate: [new Date, Validators.required],
       state: ['FL', Validators.required],
+      montlyPremium:['',Validators.required],
       responsability: ['', Validators.required],
       autoplay: ['', Validators.required],
       elegibleForCommission: [''],
     });
 
+    
+
     this.poliza = new Policy();
     this.client = new Client();
 
     console.log(this.isEditing);
+
+    this.companiaService.list().subscribe(snapshot=>{
+      console.log(snapshot)
+      this.companias = snapshot;
+    })
+
+    
+  }
+
+  ngOnInit() {
+    
+  }
+
+  ionViewDidEnter(){
 
     if(this.parametrosService.param.poliza instanceof Policy){
       this.isEditing = true;
@@ -95,6 +117,7 @@ export class FormRegistroPolizaPage implements OnInit {
       }
     }
 
+  
     if(this.usuarioService.isAdmin()){
       this.readonly = false;
     }
@@ -114,9 +137,21 @@ export class FormRegistroPolizaPage implements OnInit {
     if(this.readonly){
       this.titulo = "Policy "+this.poliza.number;
     }
+
+    this.datosForm.valueChanges.subscribe(data=>{
+      this.isSaved = false;
+      console.log("no guardado!")
+    })
   }
 
-  ngOnInit() {
+  changeCompany(event){
+    console.log("!!!!!!!!!!!!!")
+    console.log(event.target.value)
+    this.companias.forEach(com =>{
+      if(com.name == event.target.value){
+        this.planes = com.plans;
+      }
+    })
     
   }
 
@@ -161,6 +196,7 @@ export class FormRegistroPolizaPage implements OnInit {
     item.agentId = this.usuarioService.getUID();
 
     this.loadingService.presentLoading();
+    this.isSaved = true;
     if(this.isEditing){
       this.loadingService.dismissLoading();
       this.polizaService.update(item).then(data =>{
@@ -311,8 +347,37 @@ export class FormRegistroPolizaPage implements OnInit {
     modal.present();
   }
 
-  clickIcono($event){
-    this.navCtrl.back();
+  async clickIcono($event){
+    console.log(this.isSaved);
+    if(!this.isSaved){
+      const alert = await this.alertController.create({
+        header: 'Guardar',
+        message: 'Desea guardar los cambios antes de salir?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              this.navCtrl.back();
+            }
+          }, {
+            text: 'Si',
+            handler: () => { 
+              this.registrar();
+              this.navCtrl.back();
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
+    }
+    else{
+      this.navCtrl.back();
+    }
+    
+    
   }
 
   async deleteFamily(index,miembro) {

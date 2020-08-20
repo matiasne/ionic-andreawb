@@ -6,7 +6,7 @@ import { CompaniaService } from '../Services/compania.service';
 import { ToastService } from '../Services/toast.service';
 import { UsuarioService } from '../Services/usuario.service';
 import { ParametrosService } from '../Services/global/parametros.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-form-registro-companias',
@@ -32,14 +32,17 @@ export class FormRegistroCompaniasPage implements OnInit {
     private toastService:ToastService,
     private usuarioService:UsuarioService,
     private parametrosService:ParametrosService,
-    private modalController:ModalController
+    private modalController:ModalController,
+    private alertController:AlertController
   ) { 
     this.datosForm = this.formBuilder.group({
       id:['',null],
       name: ['', Validators.required],
       plans: ['', null],
     });
+
     this.compania = new Company();
+
     if(this.parametrosService.param.compania instanceof Company){
       this.isEditing = true;      
       console.log(this.parametrosService.param)
@@ -51,12 +54,6 @@ export class FormRegistroCompaniasPage implements OnInit {
     this.readonly = this.parametrosService.param.readonly;
     if(this.usuarioService.isAdmin()){
       this.readonly = false;
-    }
-    if(this.usuarioService.isAgent()){
-      let id = this.usuarioService.getUID();
-      /*if(id == this.compania.agentId){
-        this.readonly = false;
-      }*/
     }
     if(this.readonly){
       this.titulo = this.compania.name;
@@ -102,9 +99,39 @@ export class FormRegistroCompaniasPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  agregarPlan(){
-    this.planes.push(this.plan);
-    //console.log('plan', this.plan);
+  
+
+  async agregarPlan(){
+    
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'New Plan',
+        inputs: [
+          {
+            name: 'name',
+            type: 'text',
+            placeholder: 'Name'
+          }          
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+          }, {
+            text: 'Ok',
+            handler: (data) => {
+              this.planes.push(data.name);
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
+    
   }
 
   eliminarPlan(index: number){

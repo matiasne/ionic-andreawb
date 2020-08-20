@@ -27,6 +27,7 @@ export class Policy{
     public policyTermDate = "";
     public paidThroughDate ="";
     public state ="";
+    public montlyPremium ="";
     public responsibility ="";
     public autoplay ="";
     public elegibleForCommission ="";
