@@ -1,0 +1,51 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <app-header [titulo]="'Policy Registration'" [icono]="'close'" (click)='clickIcono($event)'></app-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-col>
+      <ion-searchbar animated 
+        [placeholder]="placeholder" 
+        showCancelButton="never" 
+        color="light" 
+        autocomplete="on"
+        enterkeyhint="send"
+        inputmode="text"
+        type="text"
+        debounce="500"
+        (ionChange)="onChange($event)">
+      </ion-searchbar>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  
+
+  <ngx-datatable 
+  [rows]="rows" 
+  class="material" 
+  [loadingIndicator]="loadingIndicator"
+  [columnMode]="'force'" 
+  [headerHeight]="50" 
+  [footerHeight]="50" 
+  [rowHeight]="'auto'"
+  [columns]="columns" 
+  [reorderable]="reorderable"
+  (activate)="seleccionar($event)"
+  >
+
+    <ngx-datatable-column  name="First Name" > </ngx-datatable-column>
+    <ngx-datatable-column  name="Last Name"> </ngx-datatable-column>
+    
+  </ngx-datatable>
+
+  <ion-fab class="boton-flotante" horizontal="end" vertical="end" slot="fixed" (click)="agregar()">
+    <ion-fab-button color="primary">
+      <ion-icon name="add" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

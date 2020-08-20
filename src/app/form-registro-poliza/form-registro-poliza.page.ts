@@ -17,6 +17,8 @@ import { ComentariosPageModule } from '../comentarios/comentarios.module';
 import { ArchivosPage } from '../archivos/archivos.page';
 import { ComentariosPage } from '../comentarios/comentarios.page';
 import { CompaniaService } from '../Services/compania.service';
+import { Usuario } from '../models/usuario';
+
 
 @Component({
   selector: 'app-form-registro-poliza',
@@ -34,6 +36,7 @@ export class FormRegistroPolizaPage implements OnInit {
   companias = [];
   planes =[];
   client:Client;
+  agent:Usuario;
   readonly = true;
   isEditing = false;
   titulo = "New Policy";
@@ -75,7 +78,7 @@ export class FormRegistroPolizaPage implements OnInit {
 
     this.poliza = new Policy();
     this.client = new Client();
-
+    this.agent = new Usuario();
     console.log(this.isEditing);
 
     this.companiaService.list().subscribe(snapshot=>{
@@ -105,6 +108,14 @@ export class FormRegistroPolizaPage implements OnInit {
           console.log(this.client)
         }) 
       }    
+
+      if(this.poliza.agentRef){
+        this.poliza.agentRef.get().then(snap =>{
+          this.agent.asignarValores(snap.data());
+          this.agent.id = snap.id;
+          console.log(this.agent)
+        }) 
+      }  
 
       if(this.poliza.familyMembersRef.length > 0){
         this.poliza.familyMembersRef.forEach(member =>{

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CompaniaService } from '../Services/compania.service';
 
 @Component({
   selector: 'app-table-comisiones',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableComisionesPage implements OnInit {
 
-  constructor() { }
+  public companias = [];
+  
+  constructor(
+    private companiaService:CompaniaService
+  ) { }
 
   ngOnInit() {
+
+    this.companiaService.list().subscribe(snapshot=>{
+      console.log(snapshot)
+      this.companias = snapshot;
+    })
+
   }
 
 }

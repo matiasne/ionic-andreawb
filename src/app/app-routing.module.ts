@@ -77,6 +77,10 @@ const routes: Routes = [
     path: 'form-registro-companias',
     loadChildren: () => import('./form-registro-companias/form-registro-companias.module').then( m => m.FormRegistroCompaniasPageModule)
   },
+  {
+    path: 'select-agent',
+    loadChildren: () => import('./select-agent/select-agent.module').then( m => m.SelectAgentPageModule)
+  },
 
  
 ];

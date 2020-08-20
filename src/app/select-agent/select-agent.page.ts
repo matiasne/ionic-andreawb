@@ -4,21 +4,21 @@ import { BaseCrudFirestoreService } from '../Services/base-crud-firestore.servic
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { ModalController } from '@ionic/angular';
 import { ParametrosService } from '../Services/global/parametros.service';
-import { ClientesService } from '../Services/cliente.service';
+import { AgentesService } from '../Services/agentes.service';
 
 @Component({
-  selector: 'app-select-cliente',
-  templateUrl: './select-cliente.page.html',
-  styleUrls: ['./select-cliente.page.scss'],
+  selector: 'app-select-agent',
+  templateUrl: './select-agent.page.html',
+  styleUrls: ['./select-agent.page.scss'],
 })
-export class SelectClientePage implements OnInit {
+export class SelectAgentPage implements OnInit {
 
   public Allrows = [];
   public rows =[];
   public palabraFiltro = "";
   public modal:any;
   constructor(
-    private clientesService:ClientesService,
+    private agentesService:AgentesService,
     private emailComposer: EmailComposer,
     private modalController:ModalController,
     private parametrosService:ParametrosService
@@ -28,7 +28,7 @@ export class SelectClientePage implements OnInit {
 
   ngOnInit() {
 
-    this.clientesService.list().subscribe(snapshot =>{
+    this.agentesService.list().subscribe(snapshot =>{
       this.Allrows = snapshot;
       console.log(this.rows)
       this.buscar();
