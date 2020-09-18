@@ -26,7 +26,7 @@ export class ComentariosPage implements OnInit {
   ngOnInit() {
 
     if(this.navParams.get('id')){
-      this.comentariosService.setPathArchivos(this.navParams.get('id'));
+      this.comentariosService.setPathComentarios(this.navParams.get('id'));
     }
     else{
       alert("id not found");

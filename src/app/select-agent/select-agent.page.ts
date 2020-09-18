@@ -30,7 +30,7 @@ export class SelectAgentPage implements OnInit {
 
     this.agentesService.list().subscribe(snapshot =>{
       this.Allrows = snapshot;
-      console.log(this.rows)
+      console.log(this.Allrows)
       this.buscar();
     })
 

@@ -18,6 +18,8 @@ import { ArchivosPage } from '../archivos/archivos.page';
 import { ComentariosPage } from '../comentarios/comentarios.page';
 import { CompaniaService } from '../Services/compania.service';
 import { Usuario } from '../models/usuario';
+import { SelectAgentPage } from '../select-agent/select-agent.page';
+import { AgentesService } from '../Services/agentes.service';
 
 
 @Component({
@@ -41,10 +43,12 @@ export class FormRegistroPolizaPage implements OnInit {
   isEditing = false;
   titulo = "New Policy";
   isSaved = true;
+  agentRef:DocumentReference;
   
   constructor(
     private formBuilder: FormBuilder,
     private clienteService: ClientesService,
+    private agentesService:AgentesService,
     private polizaService: PolizaService,
     private toastService:ToastService,
     private parametrosService:ParametrosService,
@@ -58,7 +62,7 @@ export class FormRegistroPolizaPage implements OnInit {
     this.datosForm = this.formBuilder.group({
       id: [''],
       status:[''],
-      agentId: [''], 
+      agentRef: [''], 
       clientRef:['',Validators.required],
       number: ['', Validators.required],
       company: ['', Validators.required],
@@ -70,8 +74,14 @@ export class FormRegistroPolizaPage implements OnInit {
       state: ['FL', Validators.required],
       montlyPremium:['',Validators.required],
       responsability: ['', Validators.required],
+      aplication_id:['',null],
       autoplay: ['', Validators.required],
       elegibleForCommission: [''],
+      document_needed:[''],
+      need_us_passport:['false',null],
+      need_green_card:['false',null],
+      need_employemnt_auth:['false',null],
+      need_paystub:['false',null]
     });
 
     
@@ -79,10 +89,8 @@ export class FormRegistroPolizaPage implements OnInit {
     this.poliza = new Policy();
     this.client = new Client();
     this.agent = new Usuario();
-    console.log(this.isEditing);
 
     this.companiaService.list().subscribe(snapshot=>{
-      console.log(snapshot)
       this.companias = snapshot;
     })
 
@@ -95,17 +103,42 @@ export class FormRegistroPolizaPage implements OnInit {
 
   ionViewDidEnter(){
 
+    
     if(this.parametrosService.param.poliza instanceof Policy){
       this.isEditing = true;
-      console.log(this.parametrosService.param)
       this.poliza = this.parametrosService.param.poliza;
       this.datosForm.patchValue(this.parametrosService.param.poliza);
       
       if(this.poliza.clientRef){
+        this.loadingService.presentLoading();
         this.poliza.clientRef.get().then(snap =>{
+          this.loadingService.dismissLoading();
           this.client.asignarValores(snap.data());
           this.client.id = snap.id;
-          console.log(this.client)
+
+          if(this.client.familyMembersRef.length > 0){
+            this.client.familyMembersRef.forEach(member =>{
+              member.get().then(snap =>{
+                let miembro = snap.data();
+                miembro.id = snap.id;
+                
+
+                this.poliza.coveredRelatives.forEach(coveredId =>{
+                  if(member.id == coveredId){
+                    miembro.covered = true;
+                  }
+                })
+
+                this.familyMembers.push(miembro);
+                console.log(this.familyMembers);
+              }) 
+            })
+          }
+
+          
+
+          
+
         }) 
       }    
 
@@ -113,19 +146,13 @@ export class FormRegistroPolizaPage implements OnInit {
         this.poliza.agentRef.get().then(snap =>{
           this.agent.asignarValores(snap.data());
           this.agent.id = snap.id;
-          console.log(this.agent)
-        }) 
+        });
+        this.agentRef = this.poliza.agentRef; 
       }  
-
-      if(this.poliza.familyMembersRef.length > 0){
-        this.poliza.familyMembersRef.forEach(member =>{
-          member.get().then(snap =>{
-            let miembro = snap.data();
-            miembro.id = snap.id;
-            this.familyMembers.push(miembro);
-          }) 
-        })
-      }
+      console.log(this.poliza);     
+    }//Si es una poliza nueva
+    else{
+      this.agentRef = this.usuarioService.getActualRef();
     }
 
   
@@ -151,13 +178,10 @@ export class FormRegistroPolizaPage implements OnInit {
 
     this.datosForm.valueChanges.subscribe(data=>{
       this.isSaved = false;
-      console.log("no guardado!")
     })
   }
 
   changeCompany(event){
-    console.log("!!!!!!!!!!!!!")
-    console.log(event.target.value)
     this.companias.forEach(com =>{
       if(com.name == event.target.value){
         this.planes = com.plans;
@@ -176,7 +200,6 @@ export class FormRegistroPolizaPage implements OnInit {
       agentId: this.usuarioService.getUID()
     });
 
-    console.log(this.datosForm.value)
 
     if(this.datosForm.invalid){
       this.toastService.mensaje("","Por favor completar todos los campos solicitados")
@@ -184,10 +207,9 @@ export class FormRegistroPolizaPage implements OnInit {
     }  
 
     this.poliza.asignarValores(this.datosForm.value);
-    console.log(this.poliza);
     this.poliza.clientRef =""; //Para que al convertirlo a json.stringify no tire error de Cirular 
     this.poliza.agentRef =""; //Para que al convertirlo a json.stringify no tire error de Cirular 
-    this.poliza.familyMembersRef = [];
+    
 
     const item = JSON.parse(JSON.stringify(this.poliza)); 
     
@@ -196,13 +218,10 @@ export class FormRegistroPolizaPage implements OnInit {
      item.clientName = this.client.firstName+' '+this.client.lastName;
     }
     
-    this.familyMembers.forEach(member =>{
-      console.log(member)
-      item.familyMembersRef.push(this.clienteService.getRef(member.id));
-    });
+   
     
     
-    item.agentRef = this.usuarioService.getActualRef();  
+    item.agentRef = this.agentRef;  
     item.agentName = this.usuarioService.getNombre();
     item.agentId = this.usuarioService.getUID();
 
@@ -210,21 +229,31 @@ export class FormRegistroPolizaPage implements OnInit {
     this.isSaved = true;
     if(this.isEditing){
       this.loadingService.dismissLoading();
-      this.polizaService.update(item).then(data =>{
-        console.log(data);
+      this.polizaService.update(item).then(data =>{        
         this.toastService.mensaje("","Policy updated");
       })
     }
     else{      
       this.polizaService.add(item).then(data =>{
         this.loadingService.dismissLoading();
-        this.isEditing = true; //Pasa a estar editando
-        console.log(data);
+        this.isEditing = true; 
+        this.poliza.asignarValores(data);
+        this.datosForm.patchValue(data);
         this.toastService.mensaje("","New Policy created");
       })
     }   
 
     this.parametrosService.param = "";
+  }
+
+  async verCliente(miembro){
+    let cliente = new Client();
+    cliente.asignarValores(miembro);
+    this.parametrosService.param.cliente = cliente;
+    const modal = await this.modalController.create({
+      component: FormRegistroClientePage
+    });    
+    modal.present();
   }
 
   async addClient(){
@@ -233,7 +262,6 @@ export class FormRegistroPolizaPage implements OnInit {
     });
     modal.onDidDismiss()
     .then((retorno:any) => {
-      console.log(retorno.data);
 
       if(retorno.data != "crear"){
         this.insertClient(retorno.data);
@@ -248,6 +276,24 @@ export class FormRegistroPolizaPage implements OnInit {
     modal.present();
   }
 
+  async changeAgent(){
+    const modal = await this.modalController.create({
+      component: SelectAgentPage
+    });
+    modal.onDidDismiss()
+    .then((retorno:any) => {
+
+      this.agentRef = this.agentesService.getRef(retorno.data.id);
+      this.agent = retorno.data;
+      console.log(this.agent)
+      this.datosForm.patchValue({
+        agentRef: "true"
+      })
+      
+    })
+    modal.present();
+
+  }
   async createClient(){
     let modal = await this.modalController.create({
       component: FormRegistroClientePage
@@ -263,41 +309,7 @@ export class FormRegistroPolizaPage implements OnInit {
       }
     })
     modal.present();
-  }
-
- 
-
-
-  async addFamily(){
-    const modal = await this.modalController.create({
-      component: SelectClientePage
-    });
-    modal.onDidDismiss()
-    .then((retorno:any) => {
-      console.log(retorno.data);
-
-      if(retorno.data != "crear"){
-        this.insertFamily(retorno.data);
-      }  
-      if(retorno.data == "crear"){
-        this.createFamily();
-      } 
-    })
-    modal.present();
-  }
-
-  async createFamily(){
-    let modal = await this.modalController.create({
-      component: FormRegistroClientePage
-    }); 
-    modal.onDidDismiss()
-    .then((retorno:any) => {
-      if(retorno.data){
-        this.insertFamily(retorno.data);       
-      }
-    })
-    modal.present();
-  }
+  } 
 
   insertClient(cli){
     let encontrado = false;
@@ -307,37 +319,46 @@ export class FormRegistroPolizaPage implements OnInit {
       this.toastService.mensaje("","Ya se encuentra agregado");
       return;
     }
-    this.familyMembers.forEach(member =>{
-      if(member.id == cli.id){
-        encontrado = true;
-      }
-    });
-    if(!encontrado){
-      this.client = cli;       
-    }
-    else{
-      this.toastService.mensaje("","Cliente ya se encuentra como miembro de familia");
+
+    this.client = cli;
+    
+    if(this.client.familyMembersRef.length > 0){
+      this.client.familyMembersRef.forEach(member =>{
+        member.get().then(snap =>{
+          let miembro = snap.data();
+          miembro.id = snap.id;
+          this.familyMembers.push(miembro);
+        }) 
+      })
     }
   }
 
-  insertFamily(mem){
-    let encontrado = false;
-
-    if(this.client.id == mem.id){
-      encontrado = true;
-      this.toastService.mensaje("","Ya se encuentra agregado como titular");
-      return;
-    }
-    this.familyMembers.forEach(member =>{
-      if(member.id == mem.id){
-        encontrado = true;
-      }
-    });
-    if(!encontrado){
-      this.familyMembers.push(mem);       
+  miembroChange(checked,miembro){
+ 
+    if(checked.target.checked){
+      let encontrado = false;     
+      console.log(miembro.id);
+      console.log(this.poliza.coveredRelatives); 
+      this.poliza.coveredRelatives.forEach((familiarID,i) =>{
+        if(familiarID == miembro.id){
+          encontrado = true;
+        }
+      });
+      if(!encontrado)
+        this.poliza.coveredRelatives.push(miembro.id);
+      
+      console.log(encontrado);
+      console.log(this.poliza.coveredRelatives);
     }
     else{
-      this.toastService.mensaje("","Miembro ya se encuentra agregado");
+      let index = 0;
+      this.poliza.coveredRelatives.forEach((familiar,i) =>{
+        if(familiar.id == miembro.id){
+          index = i;
+        }
+      });
+      this.poliza.coveredRelatives.splice(index,1);
+      console.log(this.poliza.coveredRelatives)
     }
   }
 
@@ -359,7 +380,6 @@ export class FormRegistroPolizaPage implements OnInit {
   }
 
   async clickIcono($event){
-    console.log(this.isSaved);
     if(!this.isSaved){
       const alert = await this.alertController.create({
         header: 'Guardar',
@@ -376,7 +396,6 @@ export class FormRegistroPolizaPage implements OnInit {
             text: 'Si',
             handler: () => { 
               this.registrar();
-              this.navCtrl.back();
             }
           }
         ]
@@ -391,30 +410,7 @@ export class FormRegistroPolizaPage implements OnInit {
     
   }
 
-  async deleteFamily(index,miembro) {
-    
-    const alert = await this.alertController.create({
-      header: 'Esta seguro?',
-      message: 'Remover miembro: '+miembro.firstName+' '+miembro.lastName+' ?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            
-          }
-        }, {
-          text: 'Si',
-          handler: () => { 
-            this.familyMembers.splice(index,1);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
+  
 
 
   async deleteClient() {
@@ -434,6 +430,7 @@ export class FormRegistroPolizaPage implements OnInit {
           text: 'Si',
           handler: () => { 
             this.client = new Client();
+            this.poliza.coveredRelatives = [];
           }
         }
       ]

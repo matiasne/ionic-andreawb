@@ -1,5 +1,6 @@
 export class Company{
     public id: string = "";
+    public foto:string="";
     public name: string = "";
     public plans: string[] = [];
  

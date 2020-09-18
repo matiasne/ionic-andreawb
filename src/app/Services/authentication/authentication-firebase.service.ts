@@ -13,6 +13,7 @@ import { ToastService } from '../toast.service';
 import { UsuarioService } from '../usuario.service';
 import { User } from 'src/app/models/user';
 import { environment } from '../../../environments/environment';
+import { LoadingService } from '../loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,8 @@ export class AuthenticationFirebaseService {
     private router: Router,
     private toastService:ToastService,
     private afs: AngularFirestore,
-    private usuarioService:UsuarioService
+    private usuarioService:UsuarioService,
+    private loadingService:LoadingService
   ) { 
 
     
@@ -214,6 +216,7 @@ export class AuthenticationFirebaseService {
   }  
 
   async googleSignin() {
+    this.loadingService.presentLoading();
     if (this.platform.is('cordova')) {
       let params;
       if (this.platform.is('android')) {
@@ -228,13 +231,16 @@ export class AuthenticationFirebaseService {
       }
 
       console.log(params);
+     
       this.googlePlus.login(params).then((response) => {
         const { idToken, accessToken } = response
         console.log(response);       
         this.onLoginSuccess(idToken, accessToken);
+        this.loadingService.dismissLoading();
       }).catch((error) => {
         console.log(error)
         alert('error:' + JSON.stringify(error));
+        this.loadingService.dismissLoading();
       });
   
      
@@ -251,7 +257,7 @@ export class AuthenticationFirebaseService {
         usuario.email = result.user.email;
         usuario.nombre = result.user.displayName;
         this.usuarioService.add(usuario);  
-      
+        this.loadingService.dismissLoading();
       }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -261,6 +267,7 @@ export class AuthenticationFirebaseService {
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // ...
+        this.loadingService.dismissLoading();
       });
     }
   }

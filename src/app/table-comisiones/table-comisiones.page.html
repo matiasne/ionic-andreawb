@@ -1,9 +1,87 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>table-comisiones</ion-title>
+    <app-header [titulo]="'Comissions'" [icono]="'menu'"></app-header>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
+  <ion-button color="success" (click)="showUpload()">
+    <ion-icon name="save-outline"></ion-icon>&nbsp;
+    Upload
+  </ion-button>  
+  
+  <ion-row>
+    <ion-col>
+      <ion-searchbar animated 
+        [placeholder]="placeholder" 
+        showCancelButton="never" 
+        color="light" 
+        autocomplete="on"
+        enterkeyhint="send"
+        inputmode="text"
+        type="text"
+        debounce="500"
+        (ionChange)="onChange($event)">
+      </ion-searchbar>
+    </ion-col>
+    <ion-col>
+      <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
+      <ion-label position="floating">Company</ion-label>     
+      <ion-select placeholder="Select one" (ionChange)="changeCompany($event)" name="autoplay">
+        <ion-select-option *ngFor="let compania of companias" [value]="compania.name">{{compania.name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+  </ion-row>
+  
+
+  <ngx-datatable 
+    [rows]="rows" 
+    class="material" 
+    [limit]="8"
+    [loadingIndicator]="loadingIndicator"
+    [columnMode]="'force'" 
+    [headerHeight]="50" 
+    [footerHeight]="50" 
+    [rowHeight]="'auto'"
+    [columns]="columns" 
+    [reorderable]="reorderable">
+
+    <ngx-datatable-column  name="format" [canAutoResize]="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <span *ngIf="row.format.indexOf('application') > -1" style="font-size: 24px;">
+          <ion-icon  name="document-text-outline"></ion-icon>
+        </span>
+        <span *ngIf="row.format.indexOf('image') > -1" style="font-size: 24px;">
+          <ion-icon  name="document-text-outline"></ion-icon>
+        </span>
+        <span *ngIf="row.format == ''" style="font-size: 24px;">
+          <ion-icon  name="document-text-outline"></ion-icon>
+        </span>      
+      </ng-template>
+    </ngx-datatable-column> 
+    <ngx-datatable-column  name="Company" [canAutoResize]="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row.companiaNombre}}        
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column  name="Name">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <a href="{{row.url}}" target="_blank">
+          {{row.fileName}} <br>          
+        </a>
+        {{row.createdAt | date:'hh:mm aaa dd/MM/yyyy'}}
+      </ng-template>
+    </ngx-datatable-column>       
+    <ngx-datatable-column [maxWidth]="100" [sortable]="false" [canAutoResize]="false"> 
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <ion-button  color="danger" expand="block" (click)="delete(row)">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+        </ion-button>          
+      </ng-template>    
+    </ngx-datatable-column>
+  </ngx-datatable>
+    
 </ion-content>
+
+

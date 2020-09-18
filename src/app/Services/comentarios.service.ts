@@ -15,7 +15,7 @@ export class ComentariosService extends BaseCrudFirestoreService{
     super(afs);
   }
 
-  setPathArchivos(polizaId){
+  setPathComentarios(polizaId){
     this.setPath("polizas/"+polizaId+"/comentarios");
     console.log(this.path);
   }

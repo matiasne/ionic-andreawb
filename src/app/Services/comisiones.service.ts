@@ -5,17 +5,18 @@ import { FirestorageService } from './firestorage.service';
 import { BehaviorSubject } from 'rxjs';
 import { Archivo } from '../models/archivo';
 import { ToastService } from './toast.service';
+import { Comision } from '../models/comision';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArchivosService extends BaseCrudFirestoreService{
+export class ComisionesService extends BaseCrudFirestoreService{
 
   public porcentajeSubject = new BehaviorSubject <any>("");
   public listoSubject = new BehaviorSubject <any>("");
   public borradoSubject = new BehaviorSubject <any>("");
   public finalizado = false;
-  private polizaId =""; 
+
 
   constructor(
     protected afs: AngularFirestore,
@@ -26,35 +27,32 @@ export class ArchivosService extends BaseCrudFirestoreService{
     super(afs);
     this.listoSubject.next(false);
     this.borradoSubject.next(false);
-  }
-
-  setPathArchivos(polizaId){
-    this.setPath("polizas/"+polizaId+"/archivos");
-    this.polizaId = polizaId;
+    this.setPath("comisiones");
     console.log(this.path);
   }
 
-  deleteArchivo(itemId,nombreArchivo){
 
-    this.delete(itemId).then(data=>{
-      let referencia = this.firebaseStorage.refFile(nombreArchivo);
+  deleteArchivo(item){
+
+    this.delete(item.id).then(data=>{
+      let referencia = this.firebaseStorage.refFile(item.fileName+"_"+item.companiaId);
       referencia.delete().subscribe(data=>{
         console.log(data);        
           this.borradoSubject.next(true);
           this.borradoSubject.next(false);        
       },error=>{
+          console.log(error)
           this.borradoSubject.next(true);
           this.borradoSubject.next(false);
       });
     })    
   }
 
-  upload(archivo,nombre){
+  upload(archivo,nombre,compania){
 
+    console.log(compania);
     this.finalizado = false;
-
-    let nombreArchivo = nombre+'_'+this.polizaId;
-
+    let nombreArchivo = nombre+'_'+compania.id;
     let referencia = this.firebaseStorage.refFile(nombreArchivo);
 
     referencia.getDownloadURL().subscribe(data=>{
@@ -63,17 +61,16 @@ export class ArchivosService extends BaseCrudFirestoreService{
       let tarea = this.firebaseStorage.upload(nombreArchivo, archivo);
     
         tarea.then(data=>{
-
             console.log(data);
-            let file = new Archivo();           
+            let comision = new Comision();      
             
             referencia.getDownloadURL().subscribe((URL) => {
-              file.url = URL;
-              file.name = nombre;
-              file.format = archivo.type;
-
-              const item = JSON.parse(JSON.stringify(file)); 
-
+              comision.url = URL;
+              comision.fileName = nombre;
+              comision.format = archivo.type;
+              comision.companiaId = compania.id;
+              comision.companiaNombre = compania.name;
+              const item = JSON.parse(JSON.stringify(comision)); 
               this.add(item).then(data =>{
                 console.log(data);
                 this.finalizado = true;
@@ -94,9 +91,7 @@ export class ArchivosService extends BaseCrudFirestoreService{
 
         tarea.percentageChanges().subscribe((porcentaje) => {
           let p = Math.round(porcentaje);
-
           this.porcentajeSubject.next(p);
-
         });
     });
   }

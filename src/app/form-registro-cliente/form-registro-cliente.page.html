@@ -58,8 +58,7 @@
     <ion-item [class.invalid]="submitted && !datosForm.controls.dateOfBirth.valid">
       <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
       <ion-label position="floating">Date of birth</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" min="1900-01-01" max="2100-12-31" 
-                    formControlName="dateOfBirth" name="dateOfBirth" required [readonly]="readonly"></ion-datetime>
+      <ion-input type="text" placeholder="DD/MM/YYYY" formControlName="dateOfBirth" name="dateOfBirth" required [readonly]="readonly"></ion-input>
       <div *ngIf="submitted && f.dateOfBirth.errors" class="invalid-feedback">
         <div *ngIf="f.dateOfBirth.errors.required">
           <h5>Select a date of birth</h5>
@@ -97,8 +96,137 @@
         </div>
       </div>
     </ion-item> 
+
+    <ion-item [class.invalid]="submitted && !datosForm.controls.marital_status.valid" >
+      <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
+      <ion-label position="floating">Marital Status</ion-label>     
+      <ion-select placeholder="Select one" formControlName="marital_status" name="marital_status" [disabled]="readonly">
+        <ion-select-option value="yes">Married</ion-select-option>
+        <ion-select-option value="no">Single</ion-select-option>
+      </ion-select>
+      <div *ngIf="submitted && f.marital_status.errors" class="invalid-feedback">
+        <div *ngIf="f.marital_status.errors.required">
+          <h5>Select one</h5>
+        </div>
+      </div>
+    </ion-item>
     
-    
+    <ion-item [class.invalid]="submitted && !datosForm.controls.us_citizen.valid" >
+      <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
+      <ion-label position="floating">US Citizen</ion-label>     
+      <ion-select placeholder="Select one" formControlName="us_citizen" name="us_citizen" [disabled]="readonly">
+        <ion-select-option value="yes">Yes</ion-select-option>
+        <ion-select-option value="no">No</ion-select-option>
+      </ion-select>
+      <div *ngIf="submitted && f.us_citizen.errors" class="invalid-feedback">
+        <div *ngIf="f.us_citizen.errors.required">
+          <h5>Select one</h5>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item *ngIf="datosForm.controls.us_citizen.value == 'no'" [class.invalid]="submitted && !datosForm.controls.type_document.valid" >
+      
+      <ion-label position="floating">Document Type</ion-label>     
+      <ion-select placeholder="Select one" formControlName="type_document" name="type_document" [disabled]="readonly">
+        <ion-select-option value="1">Green card</ion-select-option>
+        <ion-select-option value="2">Employment authorization Card</ion-select-option>
+        <ion-select-option value="3">Visa</ion-select-option>
+      </ion-select>
+      <div *ngIf="submitted && f.type_document.errors" class="invalid-feedback">
+        <div *ngIf="f.type_document.errors.required">
+          <h5>Select one</h5>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item *ngIf="datosForm.controls.type_document.value == '1' || datosForm.controls.type_document.value == '2'" [class.invalid]="submitted && !datosForm.controls.an.valid">
+      
+      <ion-label position="floating">A#</ion-label>
+      <ion-input name="an" type="text" formControlName="an" required [readonly]="readonly"></ion-input>
+      <div *ngIf="submitted && f.an.errors" class="invalid-feedback">
+        <div *ngIf="f.an.errors.required">
+          <h5>Enter a A#</h5>
+        </div>
+      </div>
+    </ion-item> 
+
+    <ion-item *ngIf="datosForm.controls.type_document.value == '1' || datosForm.controls.type_document.value == '2'" [class.invalid]="submitted && !datosForm.controls.card_number.valid">
+      
+      <ion-label position="floating">Card Number</ion-label>
+      <ion-input name="card_number" type="text" formControlName="card_number" required [readonly]="readonly"></ion-input>
+      <div *ngIf="submitted && f.card_number.errors" class="invalid-feedback">
+        <div *ngIf="f.card_number.errors.required">
+          <h5>Enter a Card Number</h5>
+        </div>
+      </div>
+    </ion-item> 
+
+    <ion-item *ngIf="datosForm.controls.type_document.value == '1' || datosForm.controls.type_document.value == '2'" [class.invalid]="submitted && !datosForm.controls.expiration.valid">
+      
+      <ion-label position="floating">Expiration Date</ion-label>
+      <ion-input placeholder="DD/MM/YYYY" name="expiration" type="text" formControlName="expiration" required [readonly]="readonly"></ion-input>
+      <div *ngIf="submitted && f.expiration.errors" class="invalid-feedback">
+        <div *ngIf="f.expiration.errors.required">
+          <h5>Enter a Expiration Date</h5>
+        </div>
+      </div>
+    </ion-item> 
+
+    <ion-item *ngIf="datosForm.controls.type_document.value == '2'" [class.invalid]="submitted && !datosForm.controls.category.valid">
+      
+      <ion-label position="floating">Category</ion-label>
+      <ion-input name="category" type="text" formControlName="category" required [readonly]="readonly"></ion-input>
+      <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+        <div *ngIf="f.category.errors.required">
+          <h5>Enter a Category</h5>
+        </div>
+      </div>
+    </ion-item> 
+
+    <ion-item *ngIf="datosForm.controls.type_document.value == '3'" [class.invalid]="submitted && !datosForm.controls.visa_description.valid">
+      
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea name="visa_description" type="text" formControlName="visa_description" required [readonly]="readonly"></ion-textarea>
+      <div *ngIf="submitted && f.visa_description.errors" class="invalid-feedback">
+        <div *ngIf="f.visa_description.errors.required">
+          <h5>Enter a Description</h5>
+        </div>
+      </div>
+    </ion-item> 
+
+    <!--email-->
+    <ion-item [class.invalid]="submitted && !datosForm.controls.place_work.valid">
+      <ion-label position="floating">Place Of Work</ion-label>
+      <ion-input name="place_work" type="text" formControlName="place_work" required [readonly]="readonly"></ion-input>
+      <div *ngIf="submitted && f.place_work.errors" class="invalid-feedback">
+        <div *ngIf="f.place_work.errors.required">
+          <h5>Enter a Place</h5>
+        </div>
+      </div>
+    </ion-item> 
+
+    <!--email-->
+    <ion-item [class.invalid]="submitted && !datosForm.controls.income.valid">
+      <ion-label position="floating">Income</ion-label>
+      <ion-input name="income" type="text" formControlName="income" required [readonly]="readonly"></ion-input>
+      <div *ngIf="submitted && f.income.errors" class="invalid-feedback">
+        <div *ngIf="f.income.errors.required">
+          <h5>Enter an Income</h5>
+        </div>
+      </div>
+    </ion-item> 
+
+    <!--email-->
+    <ion-item [class.invalid]="submitted && !datosForm.controls.work_description.valid">
+      <ion-label position="floating">Work Description</ion-label>
+      <ion-input name="work_description" type="text" formControlName="work_description" required [readonly]="readonly"></ion-input>
+      <div *ngIf="submitted && f.work_description.errors" class="invalid-feedback">
+        <div *ngIf="f.work_description.errors.required">
+          <h5>Enter an email</h5>
+        </div>
+      </div>
+    </ion-item> 
 
     <!--ubicacion-->
     <div [class.invalid]="submitted && !datosForm.controls.address.valid">
@@ -115,6 +243,7 @@
         [latitud]="cliente.address.lat" 
         [longitud]="cliente.address.lng"  
         [location]="cliente.address.location"  
+        [zip_code]="cliente.address.zip_code"  
         (onSelectValue)='setValue($event)'>
       </app-input-ubicacion> 
 
@@ -125,10 +254,26 @@
       </div>
     </div>
     
+    <ion-item>
+      <ion-label>Family's members</ion-label>     
+      <ion-button *ngIf="!readonly" slot="end" color="primary" (click)="addFamily()">+</ion-button>
+    </ion-item>
+
+    <ion-item *ngFor="let miembro of familyMembers;let i= index">
+      <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+      {{miembro.firstName}} {{miembro.lastName}} 
+      <ion-icon *ngIf="!readonly" color="danger" name="trash-outline" slot="end" color="primary"  (click)="deleteFamily(i,miembro)"></ion-icon>
+    </ion-item>
       
     
   
   </form>
+
+  <ion-text color="danger">
+    <h5 color="danger">zona de riesgo</h5>
+  </ion-text>        
+  <ion-button  color="danger" (click)="elimiar()">Eliminar Cliente</ion-button>
+  
 </ion-content>
 <ion-footer class="ion-padding">
   <ion-toolbar> 

@@ -26,6 +26,8 @@ export class FormRegistroCompaniasPage implements OnInit {
   planes: string[] = [];
   plan: string;
 
+  public croppedImageIcono ="";
+
   constructor(
     private formBuilder: FormBuilder,
     private companiaService: CompaniaService,
@@ -37,6 +39,7 @@ export class FormRegistroCompaniasPage implements OnInit {
   ) { 
     this.datosForm = this.formBuilder.group({
       id:['',null],
+      foto:['',null],
       name: ['', Validators.required],
       plans: ['', null],
     });
@@ -50,6 +53,7 @@ export class FormRegistroCompaniasPage implements OnInit {
       this.datosForm.patchValue(this.parametrosService.param.compania);
       this.titulo = "Edit Company";
       this.planes = this.compania.plans;
+      this.croppedImageIcono = this.compania.foto;    
     }
     this.readonly = this.parametrosService.param.readonly;
     if(this.usuarioService.isAdmin()){
@@ -62,6 +66,14 @@ export class FormRegistroCompaniasPage implements OnInit {
 
   ngOnInit() {
   }
+
+  imagenSeleccionadaIcono(newValue : any){
+    console.log(newValue);
+    this.datosForm.patchValue({
+      foto: newValue
+    })
+   }
+
 
   get f() { return this.datosForm.controls; }
 

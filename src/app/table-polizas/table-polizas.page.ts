@@ -52,22 +52,8 @@ export class TablePolizasPage implements OnInit {
 
     this.Allrows.forEach(poliza =>{
 
-      if(poliza.familyMembersRef)
-        poliza.numberOfMembres = poliza.familyMembersRef.length +1;
-        
-      /*if(poliza.clientRef){
-        poliza.clientRef.get().then(snap =>{
-          console.log(snap.data())
-          poliza.clientName = snap.data().firstName+" "+snap.data().lastName;
-        });
-      }
-
-      if(poliza.agentRef){
-        poliza.agentRef.get().then(snap=>{
-          console.log(snap.metadata.fromCache)
-          poliza.agentName = snap.data().displayName;
-        })
-      }*/
+      if(poliza.coveredRelatives)
+        poliza.numberOfMembres = poliza.coveredRelatives.length +1;
     })
   }
 

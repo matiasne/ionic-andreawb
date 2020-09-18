@@ -16,19 +16,18 @@ export class UsuarioService {
   constructor(
     private afs: AngularFirestore,
   ) {
-
+    
 
 
   }
 
-  checkToken() {    
-    if (localStorage.getItem('user')) {      
-      this.authenticationState.next(true);
-      this.userSubject.next(JSON.parse(localStorage.getItem('user')));
-
+  checkToken() {  
+    if (localStorage.getItem('user')) {         
+      console.log("!!!!")
+      
       this.afs.doc(`users/${this.getUID()}`).snapshotChanges().subscribe(data=>{
-        console.log(data.payload.data());
-        localStorage.setItem('user',JSON.stringify(data.payload.data()));
+        if(data.payload.data())
+          localStorage.setItem('user',JSON.stringify(data.payload.data()));
         this.authenticationState.next(true); 
         this.userSubject.next(data.payload.data());
       });
@@ -37,13 +36,13 @@ export class UsuarioService {
   } 
 
   add(user:User){    
-    
     const userRef: AngularFirestoreDocument = this.afs.doc(`users/${user.id}`);
     const data = JSON.parse(JSON.stringify(user));
+    console.log(data);
     return userRef.set(data, { merge: true }).then(data =>{
       userRef.get().subscribe(snap =>{
-        console.log(snap.data())
-        localStorage.setItem('user',JSON.stringify(snap.data()));
+        if(snap.data())
+          localStorage.setItem('user',JSON.stringify(snap.data()));
         this.authenticationState.next(true); 
         this.userSubject.next(snap.data());
       })
@@ -71,18 +70,36 @@ export class UsuarioService {
   }
 
   isAdmin(){
-    let user =  JSON.parse(localStorage.getItem('user'));
-    return user.rolAdmin;
+    
+      if(localStorage.getItem('user')){
+        let user =  JSON.parse(localStorage.getItem('user'));
+        return user.rolAdmin;     
+      }
+      else{
+        return false;
+      }
+
   }
 
   isAgent(){
-    let user =  JSON.parse(localStorage.getItem('user'));
-    return user.rolAgent;
+  
+    if(localStorage.getItem('user')){
+      let user =  JSON.parse(localStorage.getItem('user'));
+      return user.rolAgente;     
+    }
+    else{
+      return false;
+    }
   }
 
   getUID(){    
-    let user =  JSON.parse(localStorage.getItem('user'));
-    return user.id;
+    if(localStorage.getItem('user')!= undefined){
+      let user =  JSON.parse(localStorage.getItem('user'));
+      return user.id;     
+    }
+    else{
+      return false;
+    }
   }
 
   getNombre(){    

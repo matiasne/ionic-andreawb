@@ -5,16 +5,27 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
-  <div class="center" >
-    <ngx-file-drop dropZoneLabel="Drop files here"  (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" >
-          <div *ngIf="porcentaje == 0" style="cursor: pointer;" (click)="fileInput.click()">Haz click o arrastra un archivo aquí</div>
-          <input #fileInput  type="file" multiple="multiple" name="files[]" accept="image/*;" (change)="cambioArchivo($event)" style="display:none;" />
-          <progress *ngIf="porcentaje > 0 && porcentaje <= 100" class="progress is-large is-success" value="{{porcentaje}}" max="100">{{porcentaje}}%</progress>
-        </ng-template>
-    </ngx-file-drop>      
-  </div>
+  <ion-row>
+    <ion-col>
+      <ion-searchbar animated 
+        [placeholder]="placeholder" 
+        showCancelButton="never" 
+        color="light" 
+        autocomplete="on"
+        enterkeyhint="send"
+        inputmode="text"
+        type="text"
+        debounce="500"
+        (ionChange)="onChange($event)">
+      </ion-searchbar>
+    </ion-col>
+    <ion-col>
+      <ion-button color="success" (click)="showUpload()">
+        <ion-icon name="save-outline"></ion-icon>&nbsp;
+        Upload
+      </ion-button> 
+    </ion-col>
+  </ion-row>
   <ngx-datatable 
   [rows]="rows" 
   class="material" 

@@ -56,7 +56,7 @@ class="material"
     </ng-template>
   </ngx-datatable-column>
   
-  <ngx-datatable-column  name="# Members"> 
+  <ngx-datatable-column  name="# Members" [maxWidth]="100" [sortable]="false"> 
     <ng-template let-row="row" ngx-datatable-cell-template>
       {{row.numberOfMembres}}
     </ng-template>
@@ -68,9 +68,9 @@ class="material"
     </ng-template>
   </ngx-datatable-column>
 
-  <ngx-datatable-column  name="Status" [sortable]="false">
+  <ngx-datatable-column  name="Status" [maxWidth]="100" [sortable]="false">
   </ngx-datatable-column>
-  <ngx-datatable-column [sortable]="false"> 
+  <ngx-datatable-column [maxWidth]="100" [sortable]="false"> 
     <ng-template let-row="row" ngx-datatable-cell-template>
       <ion-button (click)="editar(row)" expand="block">
         <ion-icon name="open-outline"></ion-icon>

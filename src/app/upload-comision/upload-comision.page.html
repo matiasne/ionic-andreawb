@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>upload-comision</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <ion-select placeholder="Compania" [(ngModel)]="companiaSeleccionada" name="status">
+    <ion-select-option *ngFor="let compania of companias" [value]="compania">{{compania.name}}</ion-select-option>
+  </ion-select>
+  <div class="center" >
+    <ngx-file-drop dropZoneLabel="Drop files here"  (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" >
+        <div *ngIf="porcentaje == 0 && nombreArchivo != ''" style="cursor: pointer;" (click)="fileInput.click()">{{nombreArchivo}}</div>
+        <div *ngIf="porcentaje == 0 && nombreArchivo == ''" style="cursor: pointer;" (click)="fileInput.click()">Haz click o arrastra un archivo aquí</div>
+        <input #fileInput  type="file" multiple="multiple" name="files[]" accept="image/*;" (change)="cambioArchivo($event)" style="display:none;" />
+        <progress *ngIf="porcentaje > 0 && porcentaje <= 100" class="progress is-large is-success" value="{{porcentaje}}" max="100">{{porcentaje}}%</progress>
+      </ng-template>
+    </ngx-file-drop>   
+  </div>
+  
+   
+</ion-content>
+<ion-footer class="ion-padding">
+  <ion-toolbar> 
+    <ion-button *ngIf="!readonly" slot="end" color="success" (click)="subirArchivo()">
+      <ion-icon name="save-outline"></ion-icon>&nbsp;
+      Upload
+    </ion-button>  
+</ion-toolbar>
+</ion-footer>

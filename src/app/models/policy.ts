@@ -21,7 +21,7 @@ export class Policy{
     public plan="";
     public clientRef:any; //responsable
     public clientName =""; //responsable
-    public familyMembersRef = []; //familiares
+    public coveredRelatives = []; //familiares
     public receivedDate = "";
     public effectiveDate = "";
     public policyTermDate = "";
@@ -29,8 +29,14 @@ export class Policy{
     public state ="";
     public montlyPremium ="";
     public responsibility ="";
+    public aplication_id ="";
     public autoplay ="";
     public elegibleForCommission ="";
+    public document_needed="no";
+    public need_us_passport=false;
+    public need_green_card=false;
+    public need_employemnt_auth=false;
+    public need_paystub = false;
 
     public comments: Comment[] = [];
     public files: File[] = [];

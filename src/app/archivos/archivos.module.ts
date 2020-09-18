@@ -17,7 +17,7 @@ import { ComponentsModule } from '../Components/components.module';
     ComponentsModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxFileDropModule,
+   
     NgxDatatableModule,
     IonicModule,
     ArchivosPageRoutingModule

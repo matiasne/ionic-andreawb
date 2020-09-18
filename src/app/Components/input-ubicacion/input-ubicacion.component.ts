@@ -20,6 +20,7 @@ export class InputUbicacionComponent implements OnInit {
   @Input() door_number: string;
   @Input() latitud: number;
   @Input() longitud: number;
+  @Input() zip_code:number;
 
   @Output() onSelectValue = new EventEmitter<Localizacion>();
 
@@ -76,6 +77,9 @@ export class InputUbicacionComponent implements OnInit {
     if(this.door_number)
       this.localizacion.address.door_number = this.door_number;
     
+    if(this.zip_code)
+      this.localizacion.address.zip_code = this.zip_code;
+
     setTimeout(() => {           
       this.initAutocomplete('pac-input');     
     }, 3000);  

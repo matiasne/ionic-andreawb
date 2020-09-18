@@ -28,7 +28,8 @@
       <ion-item>
         <ion-label>Agent</ion-label>    
         <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
-        {{agent.displayName}} 
+        {{agent.nombre}} <br>
+        {{agent.email}}
         <ion-button *ngIf="!readonly" slot="end" color="primary" (click)="changeAgent()">+</ion-button>
       </ion-item>     
     </ion-col>
@@ -53,6 +54,8 @@
           </div>
         </ion-item>
         </ion-col>
+      </ion-row>
+      <ion-row>
         <ion-col>
           <!--Número-->
         <ion-item [class.invalid]="submitted && !datosForm.controls.company.valid" >
@@ -93,8 +96,8 @@
             <ion-item [class.invalid]="submitted && !datosForm.controls.receivedDate.valid" >
               <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
               <ion-label position="floating">Received date</ion-label>     
-              <ion-datetime displayFormat="MM/DD/YYYY" min="2000-01-01" max="2100-12-31" 
-                            formControlName="receivedDate" name="receireceivedDatevedDate" required [readonly]="readonly"></ion-datetime>
+              <ion-input placeholder="DD/MM/YYYY" 
+                            formControlName="receivedDate" name="receireceivedDatevedDate" required [readonly]="readonly"></ion-input>
               <div *ngIf="submitted && f.receivedDate.errors" class="invalid-feedback">
                 <div *ngIf="f.receivedDate.errors.required">
                   <h5>Select a date</h5>
@@ -107,8 +110,8 @@
           <ion-item [class.invalid]="submitted && !datosForm.controls.effectiveDate.valid" >
             <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
             <ion-label position="floating">Effective date</ion-label>     
-            <ion-datetime displayFormat="MM/DD/YYYY" min="2000-01-01" max="2100-12-31" 
-                          formControlName="effectiveDate" name="effectiveDate" required [readonly]="readonly"></ion-datetime>
+            <ion-input placeholder="DD/MM/YYYY" 
+                          formControlName="effectiveDate" name="effectiveDate" required [readonly]="readonly"></ion-input>
             <div *ngIf="submitted && f.effectiveDate.errors" class="invalid-feedback">
               <div *ngIf="f.effectiveDate.errors.required">
                 <h5>Select a date</h5>
@@ -124,8 +127,8 @@
           <ion-item [class.invalid]="submitted && !datosForm.controls.paidThroughDate.valid" >
             <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
             <ion-label position="floating">Paid through date</ion-label>     
-            <ion-datetime displayFormat="MM/DD/YYYY" min="2000-01-01" max="2100-12-31" 
-                          formControlName="paidThroughDate" name="paidThroughDate" required [readonly]="readonly"></ion-datetime>
+            <ion-input placeholder="DD/MM/YYYY" 
+                          formControlName="paidThroughDate" name="paidThroughDate" required [readonly]="readonly"></ion-input>
             <div *ngIf="submitted && f.paidThroughDate.errors" class="invalid-feedback">
               <div *ngIf="f.paidThroughDate.errors.required">
                 <h5>Select a date</h5>
@@ -138,8 +141,7 @@
           <ion-item [class.invalid]="submitted && !datosForm.controls.policyTermDate.valid" >
             <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
             <ion-label position="floating">Term Date</ion-label>     
-            <ion-datetime displayFormat="MM/DD/YYYY" min="2000-01-01" max="2100-12-31" 
-                          formControlName="policyTermDate" name="policyTermDate" required [readonly]="readonly"></ion-datetime>
+            <ion-input placeholder="DD/MM/YYYY"  formControlName="policyTermDate" name="policyTermDate" required [readonly]="readonly"></ion-input>
             <div *ngIf="submitted && f.policyTermDate.errors" class="invalid-feedback">
               <div *ngIf="f.policyTermDate.errors.required">
                 <h5>Select a date</h5>
@@ -180,7 +182,22 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      
+      <ion-row>
+        <ion-col>
+          <!--responsabilidad-->
+          <ion-item [class.invalid]="submitted && !datosForm.controls.aplication_id.valid" >
+            <ion-icon name="newspaper-outline" slot="start" color="primary"></ion-icon>
+            <ion-label position="floating">Aplication ID</ion-label>     
+            <ion-input name="aplication_id" type="text" formControlName="aplication_id" [readonly]="readonly"></ion-input>
+            <ion-icon name="cash-outline" slot="end" style="margin-top: 25px;"></ion-icon>
+            <div *ngIf="submitted && f.aplication_id.errors" class="invalid-feedback">
+              <div *ngIf="f.aplication_id.errors.required">
+                <h5>Enter a Aplication ID</h5>
+              </div>
+            </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col>
           <!--estado-->
@@ -201,8 +218,8 @@
             <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
             <ion-label position="floating">Autoplay</ion-label>     
             <ion-select placeholder="Select one" formControlName="autoplay" name="autoplay" [disabled]="readonly">
-              <ion-select-option>True</ion-select-option>
-              <ion-select-option>False</ion-select-option>
+              <ion-select-option value="true">Yes</ion-select-option>
+              <ion-select-option value="false">No</ion-select-option>
             </ion-select>
             <div *ngIf="submitted && f.autoplay.errors" class="invalid-feedback">
               <div *ngIf="f.autoplay.errors.required">
@@ -217,8 +234,8 @@
             <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
             <ion-label position="floating">Elegible for commission</ion-label>     
             <ion-select placeholder="Select one" formControlName="elegibleForCommission" name="elegibleForCommission" [disabled]="readonly">
-              <ion-select-option>True</ion-select-option>
-              <ion-select-option>False</ion-select-option>
+              <ion-select-option value="true">Yes</ion-select-option>
+              <ion-select-option value="false">No</ion-select-option>
             </ion-select>
             <div *ngIf="submitted && f.elegibleForCommission.errors" class="invalid-feedback">
               <div *ngIf="f.elegibleForCommission.errors.required">
@@ -240,22 +257,65 @@
         </div>
       </ion-item>     
       <ion-item *ngIf="client.id">
-        <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
-        {{client.firstName}} {{client.lastName}}
+        <span (click)="verCliente(client)">
+          <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+          {{client.firstName}} {{client.lastName}}
+        </span>
+        
         <ion-icon *ngIf="!readonly" color="danger" name="trash-outline" slot="end" color="primary" (click)="deleteClient()"></ion-icon>
       </ion-item>
   
       <!--Clientes miembros-->
       <ion-item>
         <ion-label>Family's members</ion-label>     
-        <ion-button *ngIf="!readonly" slot="end" color="primary" (click)="addFamily()">+</ion-button>
       </ion-item>
   
+      
       <ion-item *ngFor="let miembro of familyMembers;let i= index">
-        <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
-        {{miembro.firstName}} {{miembro.lastName}} 
-        <ion-icon *ngIf="!readonly" color="danger" name="trash-outline" slot="end" color="primary"  (click)="deleteFamily(i,miembro)"></ion-icon>
+        <span (click)="verCliente(miembro)">
+          <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+          {{miembro.firstName}} {{miembro.lastName}} 
+        </span>
+        
+        <ion-item slot="end" lines="none">
+          <ion-checkbox  [(ngModel)]="miembro.covered" (ionChange)="miembroChange($event, miembro)" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+        </ion-item>
+        
       </ion-item>
+
+      <ion-item [class.invalid]="submitted && !datosForm.controls.document_needed.valid" >
+        <ion-icon name="checkbox-outline" slot="start" color="primary"></ion-icon>
+        <ion-label position="floating">Document Needed</ion-label>     
+        <ion-select placeholder="Select one" formControlName="document_needed" name="document_needed" [disabled]="readonly">
+          <ion-select-option value="yes">Yes</ion-select-option>
+          <ion-select-option value="no">No</ion-select-option>
+        </ion-select>
+        <div *ngIf="submitted && f.document_needed.errors" class="invalid-feedback">
+          <div *ngIf="f.document_needed.errors.required">
+            <h5>Select one</h5>
+          </div>
+        </div>
+      </ion-item>
+
+      <div *ngIf="datosForm.controls.document_needed.value == 'yes'">      
+        <ion-item>
+          <ion-checkbox slot="start" formControlName="need_us_passport"></ion-checkbox>
+          US Passport
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" formControlName="need_green_card"></ion-checkbox>
+          Green Card
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" formControlName="need_employemnt_auth"></ion-checkbox>
+          Employment Authorization
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" formControlName="need_paystub"></ion-checkbox>
+          Paystub
+        </ion-item>
+      </div>
+
     </ion-col>
   </ion-row> 
 </form>

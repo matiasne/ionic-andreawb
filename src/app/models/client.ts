@@ -8,6 +8,18 @@ export class Client{
     public lastName = "";
     public gender = "";
     public dateOfBirth = "";
+    public marital_status ="";
+    public us_citizen="";
+    public type_document="";
+    public an="";
+    public card_number="";
+    public expiration="";
+    public category="";
+    public  visa_description="";
+    public place_work="";
+    public income="";
+    public work_description="";
+    public familyMembersRef = []; //familiares
     public address: Localizacion;
     public phone = "";
     public altphone = "";

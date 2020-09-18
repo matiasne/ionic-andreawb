@@ -1,3 +1,11 @@
+ion-content{
+    height: 100%;
+}
+
+.background{
+    background-image: url(../../assets/img/h-3-01.jpg);
+}
+
 .btn_eye_icon{
     position: absolute;
     right: 0;
@@ -11,4 +19,10 @@
 
 .btn_eye_icon:focus{
     outline: none  !important;
+}
+
+form{
+    padding:30px; 
+    text-align: center;
+    min-width: 300px;
 }

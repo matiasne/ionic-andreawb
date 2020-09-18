@@ -3,6 +3,7 @@ export class Localizacion{
         country: "",
         door_number: "",
         floor_number: "",
+        zip_code:0,
         lat: 0, 
         lng: 0,
         locality: "",

@@ -75,13 +75,13 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       
-
+      console.log("???")
       this.usuarioService.authenticationState.subscribe(state => {
-      
+        console.log(state)
         if (state) {
                    
           //if(!environment.desarrollando)
-            this.router.navigate(['/table-polizas']);     
+          this.router.navigate(['/table-polizas']);     
 
           if (this.platform.is('cordova')) {
             this.fcm.subscribeToTopic('general');

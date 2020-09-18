@@ -81,6 +81,14 @@ const routes: Routes = [
     path: 'select-agent',
     loadChildren: () => import('./select-agent/select-agent.module').then( m => m.SelectAgentPageModule)
   },
+  {
+    path: 'upload-comision',
+    loadChildren: () => import('./upload-comision/upload-comision.module').then( m => m.UploadComisionPageModule)
+  },
+  {
+    path: 'upload-file-poliza',
+    loadChildren: () => import('./upload-file-poliza/upload-file-poliza.module').then( m => m.UploadFilePolizaPageModule)
+  },
 
  
 ];
